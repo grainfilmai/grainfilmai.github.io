@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRAIN Text Effect Test</title>
+<style>
+  @font-face {
+    font-family: 'Inter';
+    src: url('/fonts/inter-variable-latin.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #000;
+    color: #fff;
+  }
+
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 60%;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: heroFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes heroFadeIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .hero__subtitle {
+    font-size: clamp(1.35rem, 2.7vw, 1.875rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.02em;
+    margin-top: 1rem;
+    text-align: center;
+    max-width: 44ch;
+  }
+
+  .grain-canvas {
+    image-rendering: pixelated;
+  }
+
+  .label {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background: rgba(0,0,0,0.7);
+    padding: 0.5rem 1.5rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(8px);
+    white-space: nowrap;
+  }
+
+  .divider {
+    height: 4px;
+    background: #fff;
+    position: relative;
+    z-index: 5;
+  }
+</style>
+</head>
+<body>
+
+<!-- VERSION A: BW grain -->
+<section class="hero" style="position:relative;">
+  <div class="label">A: BW film grain on letters</div>
+  <video class="hero__video" autoplay muted loop playsinline>
+    <source src="/videos/hero-wheat-2.mp4" type="video/mp4">
+  </video>
+  <div class="hero__overlay"></div>
+  <div class="hero__inner">
+    <canvas class="grain-canvas" id="grain-a"></canvas>
+    <p class="hero__subtitle">The shot you need costs more than your budget allows.<br/>We build the workflow to get it anyway.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VERSION B: Color grain -->
+<section class="hero" style="position:relative;">
+  <div class="label">B: Color film grain on letters</div>
+  <video class="hero__video" autoplay muted loop playsinline>
+    <source src="/videos/hero-wheat-2.mp4" type="video/mp4">
+  </video>
+  <div class="hero__overlay"></div>
+  <div class="hero__inner">
+    <canvas class="grain-canvas" id="grain-b"></canvas>
+    <p class="hero__subtitle">The shot you need costs more than your budget allows.<br/>We build the workflow to get it anyway.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VERSION C: Heavy color grain -->
+<section class="hero" style="position:relative;">
+  <div class="label">C: Heavy color grain on letters</div>
+  <video class="hero__video" autoplay muted loop playsinline>
+    <source src="/videos/hero-wheat-2.mp4" type="video/mp4">
+  </video>
+  <div class="hero__overlay"></div>
+  <div class="hero__inner">
+    <canvas class="grain-canvas" id="grain-c"></canvas>
+    <p class="hero__subtitle">The shot you need costs more than your budget allows.<br/>We build the workflow to get it anyway.</p>
+  </div>
+</section>
+
+<script>
+function grainText(canvasId, options) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+
+  // Size the canvas to fit "GRAIN" text
+  const fontSize = Math.min(window.innerWidth * 0.1, 128);
+  const font = `800 ${fontSize}px Inter, system-ui, sans-serif`;
+
+  ctx.font = font;
+  ctx.letterSpacing = `${-0.04 * fontSize}px`;
+  const metrics = ctx.measureText('GRAIN');
+  const textWidth = metrics.width;
+  const textHeight = fontSize;
+
+  canvas.width = (textWidth + 20) * dpr;
+  canvas.height = (textHeight + 20) * dpr;
+  canvas.style.width = (textWidth + 20) + 'px';
+  canvas.style.height = (textHeight + 20) + 'px';
+  ctx.scale(dpr, dpr);
+
+  function draw() {
+    const w = textWidth + 20;
+    const h = textHeight + 20;
+
+    // Clear
+    ctx.clearRect(0, 0, w, h);
+
+    // Draw white text
+    ctx.font = font;
+    ctx.letterSpacing = `${-0.04 * fontSize}px`;
+    ctx.fillStyle = '#ffffff';
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    ctx.fillText('GRAIN', w / 2, h / 2);
+
+    // Read pixels
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    // Apply grain only where text exists (alpha > 0)
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] > 10) { // pixel has text
+        if (Math.random() < options.density) {
+          if (options.color) {
+            data[i]     = Math.floor(Math.random() * 255);
+            data[i + 1] = Math.floor(Math.random() * 255);
+            data[i + 2] = Math.floor(Math.random() * 255);
+          } else {
+            const dark = Math.floor(Math.random() * 180);
+            data[i]     = dark;
+            data[i + 1] = dark;
+            data[i + 2] = dark;
+          }
+        }
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    requestAnimationFrame(draw);
+  }
+
+  // Wait for font to load
+  document.fonts.ready.then(draw);
+}
+
+// A: BW grain
+grainText('grain-a', { density: 0.18, color: false });
+
+// B: Color grain
+grainText('grain-b', { density: 0.15, color: true });
+
+// C: Heavy color
+grainText('grain-c', { density: 0.28, color: true });
+</script>
+
+</body>
+</html>
