@@ -81,8 +81,21 @@
     text-wrap:pretty;hyphens:auto;
   }
   @media (max-width:900px){
-    .tier{height:auto;min-height:100vh;padding:56px 0 80px}
-    .cap{grid-template-columns:1fr;gap:6px;padding:14px 0;flex:0 0 auto}
+    .hero{padding:0 0 88px}
+    .display{font-size:clamp(56px, 16vw, 104px);line-height:.9}
+    .display .x{padding:0 .04em}
+
+    .tier{min-height:auto;padding:64px 0 88px}
+    .tier-head{margin-bottom:18px}
+    .tier-label{font-size:9px}
+    .tier-title{font-size:clamp(30px, 8vw, 48px)}
+
+    .cap{
+      grid-template-columns:1fr;gap:10px;
+      padding:22px 0;align-items:start;
+    }
+    .cap .name{font-size:17px;line-height:1.25}
+    .cap .body{font-size:16px;line-height:1.5}
   }
 
   /* stack — tight 3-column masonry */
@@ -99,16 +112,19 @@
   }
   @media (max-width:1200px){.stack-grid{column-count:2}}
   @media (max-width:900px){
-    .stack{height:auto;padding:56px 0 80px}
-    .stack-grid{column-count:1;column-gap:0}
+    .stack{min-height:auto;padding:64px 0 88px}
+    .stack-grid{column-count:1;column-gap:0;padding-top:16px}
+    .stack-group{margin-bottom:28px}
+    .stack-group .cat{font-size:19px;margin-bottom:10px;padding-bottom:8px}
+    .stack-group li{font-size:14px;line-height:1.5}
   }
   .stack-group{
     break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;
     display:inline-block;width:100%;margin-bottom:20px;
   }
   .stack-group .cat{
-    font-family:var(--serif);font-weight:400;font-style:italic;
-    font-size:clamp(18px, 1.55vw, 23px);line-height:1.15;letter-spacing:-.015em;
+    font-family:var(--sans);font-weight:600;font-style:normal;
+    font-size:clamp(15px, 1.2vw, 18px);line-height:1.2;letter-spacing:-.01em;
     color:var(--ink);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--line);
   }
   .stack-group ul{list-style:none;display:flex;flex-direction:column;gap:7px}
@@ -139,9 +155,15 @@
   .progress__nav.is-disabled{opacity:.25;cursor:default}
   .progress__nav .arrow{font-size:13px;letter-spacing:0;transform:translateY(-.5px)}
   @media (max-width:900px){
-    .progress{grid-template-columns:1fr auto;padding:0 20px;gap:14px}
+    .progress{
+      grid-template-columns:1fr auto;padding:0 18px;gap:14px;
+      height:52px;
+    }
     .progress__track{display:none}
-    .progress__controls{gap:16px}
+    .progress__controls{gap:20px}
+    .progress__label{font-size:9px;letter-spacing:.16em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .progress__nav{font-size:9px}
+    .progress__nav .arrow{font-size:12px}
   }
 
   section[id]{scroll-margin-top:24px}
@@ -341,7 +363,6 @@
   <div class="wrap">
     <div class="tier-head">
       <div class="tier-label">The Stack</div>
-      <h2 class="tier-title">Current register.</h2>
     </div>
 
     <div class="stack-grid">
