@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GRAIN × SMUGGLER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#EAE6DE;
+    --bg:#0A0A0A;
+    --mute:#8A8378;
+    --line:rgba(255,255,255,.12);
+    --hot:#C81A1A;
+    --serif:"Fraunces", ui-serif, Georgia, serif;
+    --sans:"Inter", -apple-system, "Helvetica Neue", sans-serif;
+    --mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);font-size:16px;line-height:1.55}
+  ::selection{background:var(--hot);color:#fff}
+
+  /* one section = one page */
+  @media (min-width:901px){
+    html{scroll-snap-type:y mandatory}
+    section[id]{scroll-snap-align:start;scroll-snap-stop:always}
+  }
+
+  .wrap{max-width:1680px;margin:0 auto;padding:0 64px;width:100%}
+  @media (max-width:900px){.wrap{padding:0 24px}}
+
+  /* hero / cover */
+  .hero{
+    height:100vh;display:flex;align-items:center;justify-content:flex-start;
+    padding:0 0 56px;
+  }
+  .display{
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:clamp(56px, 12vw, 180px);line-height:.88;letter-spacing:-.035em;
+  }
+  .display .x{font-style:normal;font-weight:200;color:var(--hot);padding:0 .05em;display:inline-block;transform:translateY(-.05em)}
+
+  /* tier sections — at least one page, packed tight from the top */
+  .tier{
+    min-height:100vh;
+    padding:56px 0 76px;
+    display:flex;flex-direction:column;
+    border-top:1px solid var(--line);
+  }
+  .tier > .wrap{display:flex;flex-direction:column;width:100%}
+  .tier-head{margin-bottom:24px}
+  .tier-label{
+    font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--hot);margin-bottom:10px;
+  }
+  .tier-title{
+    font-family:var(--serif);font-weight:300;font-style:italic;
+    font-size:clamp(30px, 4vw, 56px);line-height:1;letter-spacing:-.025em;color:var(--ink);
+  }
+
+  /* capability rows — consistent tight stack */
+  .caps{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+  .cap{
+    display:grid;grid-template-columns:minmax(220px, 1fr) 3.5fr;gap:48px;
+    align-items:baseline;
+    padding:18px 0;border-bottom:1px solid var(--line);
+  }
+  .cap:last-child{border-bottom:0}
+  .cap .name{
+    font-family:var(--sans);font-weight:600;font-style:normal;
+    font-size:clamp(17px, 1.35vw, 21px);line-height:1.2;letter-spacing:-.015em;color:var(--ink);
+  }
+  .cap .body{
+    font-family:var(--serif);font-weight:300;font-style:normal;
+    font-size:clamp(16px, 1.2vw, 20px);line-height:1.4;letter-spacing:-.005em;
+    color:#d8d2c6;
+    text-wrap:pretty;hyphens:auto;
+  }
+  @media (max-width:900px){
+    .tier{height:auto;min-height:100vh;padding:56px 0 80px}
+    .cap{grid-template-columns:1fr;gap:6px;padding:14px 0;flex:0 0 auto}
+  }
+
+  /* stack — tight 3-column masonry */
+  .stack{
+    min-height:100vh;
+    padding:72px 0 84px;
+    display:flex;flex-direction:column;
+    border-top:1px solid var(--line);
+  }
+  .stack > .wrap{display:flex;flex-direction:column}
+  .stack-grid{
+    column-count:3;column-gap:48px;
+    border-top:1px solid var(--line);padding-top:20px;
+  }
+  @media (max-width:1200px){.stack-grid{column-count:2}}
+  @media (max-width:900px){
+    .stack{height:auto;padding:56px 0 80px}
+    .stack-grid{column-count:1;column-gap:0}
+  }
+  .stack-group{
+    break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;
+    display:inline-block;width:100%;margin-bottom:20px;
+  }
+  .stack-group .cat{
+    font-family:var(--serif);font-weight:400;font-style:italic;
+    font-size:clamp(18px, 1.55vw, 23px);line-height:1.15;letter-spacing:-.015em;
+    color:var(--ink);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--line);
+  }
+  .stack-group ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+  .stack-group li{font-size:clamp(13px, 1vw, 15px);line-height:1.45;color:#bdb8ae}
+  .stack-group li .mdl{color:var(--ink);font-weight:500}
+
+  /* progress bottom nav */
+  .progress{
+    position:fixed;left:0;right:0;bottom:0;z-index:10000;
+    display:grid;grid-template-columns:320px 1fr 176px;gap:40px;align-items:center;
+    height:56px;padding:0 64px;background:var(--bg);border-top:1px solid var(--line);
+    color:var(--ink);font-family:var(--sans);font-size:16px;
+  }
+  .progress__label{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+  .progress__label .sec{color:var(--hot);margin-right:8px}
+  .progress__track{position:relative;height:2px;background:rgba(255,255,255,.12)}
+  .progress__fill{position:absolute;left:0;top:0;height:2px;background:var(--hot);width:0%;transition:width .35s ease}
+  .progress__ticks{position:absolute;left:0;top:-5px;height:12px;width:100%;pointer-events:none}
+  .progress__ticks span{position:absolute;top:0;width:1px;height:12px;background:rgba(255,255,255,.25)}
+  .progress__dot{position:absolute;top:-4.5px;width:11px;height:11px;border-radius:50%;background:var(--hot);left:0;transform:translateX(-50%);transition:left .35s ease}
+  .progress__controls{display:flex;gap:22px;justify-content:flex-end}
+  .progress__nav{
+    background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;gap:6px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);
+    transition:color .25s ease, opacity .25s ease;
+  }
+  .progress__nav:hover{color:var(--ink)}
+  .progress__nav.is-disabled{opacity:.25;cursor:default}
+  .progress__nav .arrow{font-size:13px;letter-spacing:0;transform:translateY(-.5px)}
+  @media (max-width:900px){
+    .progress{grid-template-columns:1fr auto;padding:0 20px;gap:14px}
+    .progress__track{display:none}
+    .progress__controls{gap:16px}
+  }
+
+  section[id]{scroll-margin-top:24px}
+</style>
+</head>
+<body>
+
+<section class="hero" id="cover">
+  <div class="wrap">
+    <h1 class="display">GRAIN<span class="x">×</span><br>SMUGGLER</h1>
+  </div>
+</section>
+
+<!-- TIER 01 -->
+<section class="tier" id="tier01">
+  <div class="wrap">
+    <div class="tier-head">
+      <div class="tier-label">Tier 01</div>
+      <h2 class="tier-title">Commercial R&amp;D</h2>
+    </div>
+
+    <div class="caps">
+      <div class="cap">
+        <div class="name">Competitive teardowns</div>
+        <div class="body">Reverse-engineer any AI-forward commercial a competitor ships (Asteria, Promise, Wonder, Hysteria, in-house studio teams) and build the equivalent pipeline so SMUGGLER can match or exceed on the next bid.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Brief-by-brief consulting</div>
+        <div class="body">GRAIN sits alongside the roster on incoming briefs: what AI makes possible for this spot, for this budget, for this director's visual language.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Director workshops</div>
+        <div class="body">Per-director, per-project sessions that introduce new capabilities in the context of each director's actual current slate, not a generic demo day.</div>
+      </div>
+      <div class="cap">
+        <div class="name">The 100-versions playbook</div>
+        <div class="body">One hero spot, dozens to hundreds of geo-, demo-, language-, and channel-targeted variants. The Booking.com model, productized for any performance-heavy brand.</div>
+      </div>
+      <div class="cap">
+        <div class="name">VFX budget auditing</div>
+        <div class="body">Line-by-line review of incoming VFX bids, identifying where AI-assisted workflows compress cost without compromising craft. Handed off to existing post partners, not around them.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Pre-viz and pitch reinvention</div>
+        <div class="body">Animated treatments, moving-image boards, and proof-of-concept clips delivered in 48 to 72 hours, so directors pitch in motion rather than in reference stills.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Archival activation</div>
+        <div class="body">Restoration, upres, re-grading, and generative extension of existing footage and stills so it becomes usable material for new campaigns rather than dead inventory.</div>
+      </div>
+      <div class="cap">
+        <div class="name">The C. Prinz opportunity</div>
+        <div class="body">[Brief description of the specific C. Prinz project, to be filled in.]</div>
+      </div>
+      <div class="cap">
+        <div class="name">Bid-level rapid consulting</div>
+        <div class="body">48-hour turnaround during active bidding on "can we do this for this budget using these tools": the translation layer between buzzword-heavy agency briefs and what's actually buildable.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIER 02 -->
+<section class="tier" id="tier02">
+  <div class="wrap">
+    <div class="tier-head">
+      <div class="tier-label">Tier 02</div>
+      <h2 class="tier-title">Live, Broadcast &amp; Experiential</h2>
+    </div>
+
+    <div class="caps">
+      <div class="cap">
+        <div class="name">Bid support for live</div>
+        <div class="body">Scoping, costing, and strategic positioning on live and broadcast bids (concerts, keynotes, award shows, broadcast specials) where AI capability is increasingly part of the win.</div>
+      </div>
+      <div class="cap">
+        <div class="name">New possibilities for live events</div>
+        <div class="body">Real-time generative environments, gestural stage control (building on MotionStream research already in GRAIN's hands), AI-driven camera blocking, responsive scenography. What becomes possible live that wasn't possible twelve months ago.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Live-to-pre-recorded convergence</div>
+        <div class="body">The Apple keynote problem: making pre-recorded segments feel live so live segments feel even more live. Seamless integration with no visible seam, applicable to keynotes, concerts, theatrical broadcasts, tentpole launches.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Post-keynote experiential cohesion</div>
+        <div class="body">Sarah's (OpenAI) explicit ask: extending a keynote's story into the physical space afterward (activations, installations, social moments) that feel connected rather than bolted-on. Directly solving the "Gemini photo booth at Coachella felt like table stakes" problem.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIER 03 -->
+<section class="tier" id="tier03">
+  <div class="wrap">
+    <div class="tier-head">
+      <div class="tier-label">Tier 03</div>
+      <h2 class="tier-title">Theatrical, Film &amp; Long-Form</h2>
+    </div>
+
+    <div class="caps">
+      <div class="cap">
+        <div class="name">Proof-of-concepts for the roster</div>
+        <div class="body">Pitch materials, visual treatments, animated lookbooks, and short-form proof-of-concepts that help roster directors access financing capital, develop projects, and get long-form work greenlit.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Responsive scenography for theater</div>
+        <div class="body">Generative projection, lighting, and environmental design that responds to blocking, vocal dynamics, and cue marks in real time. For Buena Vista Social Club, Girl Interrupted at The Public, and the theatrical productions after them.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Miles's movie</div>
+        <div class="body">Develop custom solutions to lower the budget threshold of Miles' independent film projects.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIER 04 -->
+<section class="tier" id="tier04">
+  <div class="wrap">
+    <div class="tier-head">
+      <div class="tier-label">Tier 04</div>
+      <h2 class="tier-title">SMUGGLER's Own AI Capability (Internal)</h2>
+    </div>
+
+    <div class="caps">
+      <div class="cap">
+        <div class="name">Internal tools audit</div>
+        <div class="body">Full review of SMUGGLER's current internal systems (bidding, scheduling, pitch, asset management, post coordination), identifying where AI-native tools could replace, augment, or eliminate existing workflows.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Proprietary tool builds</div>
+        <div class="body">Scope, spec, and quote for internal tool builds custom to SMUGGLER's operations, where off-the-shelf doesn't cut it. Build only what compounds; buy everything else.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Director and EP workshops</div>
+        <div class="body">Per-director, private, half-day sessions tailored to each director's current slate. Not cohorts. Not launch events. Ongoing. Based directly on the Creative Labs salon format built with Souki at OpenAI.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Quarterly state-of-the-art briefings</div>
+        <div class="body">Sixty-minute company-wide sessions for EPs, directors, and executives. What's new, what's hype, what competitors are deploying. Recorded, documented, delivered as slide decks the team can reference.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Competitive intelligence</div>
+        <div class="body">Ongoing monthly read (plus ad-hoc briefs) on Asteria, Promise, Wonder, Hysteria, and the VFX houses pivoting to AI. What's real, what's marketing, what's collapsing, who to hire when it does.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Talent and research lab scouting</div>
+        <div class="body">Formalizing GRAIN's existing relationships (NVIDIA Spatial Intelligence Lab with Joonghyuk Shin and Xun Huang, MIT Media Lab with Ninon Lizé Masclef, UCLA with Luke, and the open-source ComfyUI community) into a pipeline for SMUGGLER's hiring and project staffing.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Pitch deck sites</div>
+        <div class="body">Custom-built interactive pitch sites for high-stakes new business and project development: faster, more cinematic, more memorable than slides.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Ongoing workshops</div>
+        <div class="body">A standing cadence of workshops across the company so AI literacy continues to rise rather than arriving once and decaying.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIER 05 -->
+<section class="tier" id="tier05">
+  <div class="wrap">
+    <div class="tier-head">
+      <div class="tier-label">Tier 05</div>
+      <h2 class="tier-title">Strategic &amp; Frontier</h2>
+    </div>
+
+    <div class="caps">
+      <div class="cap">
+        <div class="name">Weathering the storm</div>
+        <div class="body">How does SMUGGLER position itself through the next two to five years of market disruption? What's defensible, what's vulnerable, what needs to change.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Participating in the AI economy</div>
+        <div class="body">What opportunities (partnerships, equity, co-production, licensing) does SMUGGLER want to be part of as the AI industry builds out. A strategic map rather than a reactive posture.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Building business with AI-native counterparties</div>
+        <div class="body">How SMUGGLER continues to grow inside a market where AI companies, AI-native brands, and AI-enabled competitors are increasingly where the budgets live.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Archival and back-catalog monetization</div>
+        <div class="body">Beyond restoration for repurposing: working with estates and rights-holders to monetize archives in 4K/8K, or to license footage as training data with rigorous consent frameworks. A new recurring revenue lane that didn't exist two years ago.</div>
+      </div>
+      <div class="cap">
+        <div class="name">Andre's piece</div>
+        <div class="body">Finding a frontier lab to cover development and production costs: a concrete, deliverable-scale example of how the Tier 05 thesis plays out in practice.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="tier" id="stack">
+  <div class="wrap">
+    <div class="tier-head">
+      <div class="tier-label">The Stack</div>
+      <h2 class="tier-title">Current register.</h2>
+    </div>
+
+    <div class="stack-grid">
+      <div class="stack-group">
+        <div class="cat">Foundation video models (open weights)</div>
+        <ul>
+          <li><span class="mdl">Wan 2.6 / 2.7 (Alibaba):</span> current open workhorse; R2V learns motion, camera, style from a 5s reference clip; 2.7 adds deterministic composition with 9-grid I2V anchor frames</li>
+          <li><span class="mdl">HunyuanVideo 1.5 (Tencent):</span> 13B T2V/I2V, 720p at 24fps, upscales to 1080p, runs on 8 to 16 GB VRAM</li>
+          <li><span class="mdl">LTX-2 (Lightricks):</span> 19B DiT that generates synced video + audio in one pass; NVFP4 checkpoints push 4K locally</li>
+          <li><span class="mdl">Nvidia Cosmos:</span> 7B and 14B, strong physical-world prior, 1280x704 at 121 frames on a 12 GB card</li>
+          <li><span class="mdl">Mochi 1 (Genmo):</span> 10B AsymmDiT, best-in-class text adherence, 480p</li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="cat">Foundation video models (closed, via ComfyUI API nodes)</div>
+        <ul>
+          <li><span class="mdl">Veo 3 and Veo 3 Fast (Google):</span> high realism, native audio, fast variant for iteration</li>
+          <li><span class="mdl">Runway Gen-4.5:</span> Elo leader at launch, pairs with Act-Two</li>
+          <li><span class="mdl">Kling 2.1, MiniMax Hailuo-02, Vidu:</span> side-by-side options for look variety</li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="cat">Control, consistency, character</div>
+        <ul>
+          <li><span class="mdl">VACE (Wan 2.1/2.2):</span> unified T2V, R2V, V2V, inpainting, outpainting</li>
+          <li><span class="mdl">Wan 2.6 Reference-to-Video:</span> clone appearance + voice + motion from one clip</li>
+          <li><span class="mdl">Wan 2.2 Animate:</span> skeleton-based motion transfer + expression fidelity</li>
+          <li><span class="mdl">UniAnimate:</span> human animation with different quality profile to Wan Animate</li>
+          <li><span class="mdl">One-to-All Animation 14B (CVPR 2026):</span> alignment-free, integrated in Kijai WanVideoWrapper</li>
+          <li><span class="mdl">BindWeave:</span> character consistency when LoRA training is not an option</li>
+          <li><span class="mdl">Character LoRA training:</span> 15 to 50 images, 1000 to 3000 steps, for hero continuity</li>
+          <li><span class="mdl">IP-Adapter / face embedding:</span> fast previz consistency</li>
+          <li><span class="mdl">Wan 2.2 Fun Camera:</span> real camera language as Camera Control Codes (pan, tilt, dolly, orbit, crane, tracking)</li>
+          <li><span class="mdl">Depth Anything V2 + ControlNet:</span> spatial stability across cuts</li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="cat">Performance and acceleration</div>
+        <ul>
+          <li><span class="mdl">LightX2V V2 distillation LoRA:</span> 40 steps down to 8 to 14, ~4x speedup</li>
+          <li><span class="mdl">NVFP4 / NVFP8 checkpoints (lightx2v):</span> ~60% less VRAM, up to 3x faster on Blackwell/Rubin</li>
+          <li><span class="mdl">Kijai WanVideoWrapper:</span> block swapping, FP8/GGUF quantization, torch.compile</li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="cat">Finishing: upscale and interpolation</div>
+        <ul>
+          <li><span class="mdl">SeedVR2 v2.5 (ByteDance):</span> one-step video restoration, 60% less VRAM, GGUF quant, unlimited length</li>
+          <li><span class="mdl">FlashVSR:</span> competing open video super-res, commonly A/B tested against SeedVR2</li>
+          <li><span class="mdl">Topaz Video AI:</span> still best for archival, interlaced, VHS, film-grain sources</li>
+          <li><span class="mdl">RIFE VFI (4.0 to 4.9):</span> default frame interpolation, TensorRT variant for speed</li>
+          <li><span class="mdl">GIMM-VFI:</span> sharper intermediates, occasional artifacts</li>
+          <li><span class="mdl">FILM:</span> safest for big-motion scenes</li>
+          <li><span class="mdl">GMFSS Fortuna:</span> anime-optimized</li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="cat">Long-form continuity and stitching</div>
+        <ul>
+          <li><span class="mdl">ComfyUI-Wan-SVI2Pro-FLF (Well-Made, thinkWHY2046 forks):</span> first-frame / last-frame keyframes, seamless stitching across 7+ clips</li>
+          <li><span class="mdl">Stable Video Infinity 2.0 + Wan 2.2 I2V A14B:</span> 5-pass pipeline handing motion latents clip to clip</li>
+          <li><span class="mdl">ComfyUI-Wan-VACE-Prep (stuttlepress):</span> interactive canvas for outpainting source frames</li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="cat">Dialogue, lip sync, audio</div>
+        <ul>
+          <li><span class="mdl">LatentSync 1.6 (ByteDance):</span> 512x512 training, fixes teeth/mouth blur, 4K portrait output</li>
+          <li><span class="mdl">MultiTalk (MeiGen-AI):</span> multi-speaker with Uni3C camera stabilization, 480p to 720p</li>
+          <li><span class="mdl">Stable Audio 2.5:</span> 3-minute tracks in under 2s, audio inpainting, API node</li>
+          <li><span class="mdl">ComfyUI_MusicTools, DJ_VideoAudioMixer:</span> stem processing and A/V sync</li>
+          <li><span class="mdl">HeartMuLa:</span> open-source Suno-style generator inside ComfyUI</li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="cat">Image editing for frames, boards, inserts</div>
+        <ul>
+          <li><span class="mdl">Qwen Image Edit 2511:</span> natural-language edits, up to 3 input images, compositing</li>
+          <li><span class="mdl">Nano Banana Pro (Google Gemini):</span> partner node, pairs with Kling Omni Pro and Wan 2.6</li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="cat">Performance capture and real-time</div>
+        <ul>
+          <li><span class="mdl">Runway Act-Two:</span> webcam-to-character full-body + face + hands transfer</li>
+          <li><span class="mdl">Krea Realtime 14B:</span> 11 fps on B200, ~1s time to first frame, live prompt-surfing</li>
+          <li><span class="mdl">Krea integrated suite:</span> browser access to Veo 3, Kling, Hailuo, Wan, Runway; 8K upscale, 120 fps interpolation</li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="cat">3D and Gaussian splat previz</div>
+        <ul>
+          <li><span class="mdl">ComfyUI-3D-Pack (MrForExample):</span> NeRF and 3DGS generation</li>
+          <li><span class="mdl">ComfyUI-Sharp:</span> single-image to 3DGS</li>
+          <li><span class="mdl">GeometryPack + GaussianViewer:</span> splat preview and PLY export</li>
+          <li><span class="mdl">KHR_gaussian_splatting glTF 2.0 (Feb 2026):</span> industry-standard splat interchange</li>
+        </ul>
+      </div>
+
+      <div class="stack-group">
+        <div class="cat">Horizon tech (emerging, track closely)</div>
+        <ul>
+          <li><span class="mdl">Runway GWM-1 (Worlds, Avatars, Robotics):</span> real-time interactive environment simulation</li>
+          <li><span class="mdl">Google Project Genie / Genie 3:</span> playable 3D worlds at 24 fps 720p, 60s sessions</li>
+          <li><span class="mdl">Decart Oasis:</span> commercial real-time world model</li>
+          <li><span class="mdl">Streaming ComfyUI graph mode (expected 2026):</span> rolling-buffer video generation</li>
+          <li><span class="mdl">Wan 2.7 deterministic composition:</span> physics-aware controllable diffusion</li>
+          <li><span class="mdl">Splat-conditioned video:</span> geometry as explicit spatial conditioning</li>
+          <li><span class="mdl">Marker-free full-body capture:</span> the direction Act-Two is pushing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- progress bottom nav -->
+<nav class="progress" aria-label="section progress">
+  <div class="progress__label"><span class="sec" id="prog-sec">§ 00 /</span><span id="prog-title">COVER</span></div>
+  <div class="progress__track">
+    <div class="progress__fill" id="prog-fill"></div>
+    <div class="progress__ticks" id="prog-ticks"></div>
+    <div class="progress__dot" id="prog-dot"></div>
+  </div>
+  <div class="progress__controls">
+    <button class="progress__nav" id="prog-prev" aria-label="previous section">
+      <span class="arrow">←</span><span>Prev</span>
+    </button>
+    <button class="progress__nav" id="prog-next" aria-label="next section">
+      <span>Next</span><span class="arrow">→</span>
+    </button>
+  </div>
+</nav>
+
+<script>
+(function(){
+  var sections = [
+    {id:'cover',  sec:'§ 00 /', title:'COVER'},
+    {id:'tier01', sec:'§ 01 /', title:'COMMERCIAL R&D'},
+    {id:'tier02', sec:'§ 02 /', title:'LIVE, BROADCAST & EXPERIENTIAL'},
+    {id:'tier03', sec:'§ 03 /', title:'THEATRICAL, FILM & LONG-FORM'},
+    {id:'tier04', sec:'§ 04 /', title:"SMUGGLER'S OWN AI CAPABILITY"},
+    {id:'tier05', sec:'§ 05 /', title:'STRATEGIC & FRONTIER'},
+    {id:'stack',  sec:'§ 06 /', title:'THE STACK'}
+  ];
+
+  var elFill = document.getElementById('prog-fill');
+  var elDot  = document.getElementById('prog-dot');
+  var elSec  = document.getElementById('prog-sec');
+  var elTitle= document.getElementById('prog-title');
+  var elTicks= document.getElementById('prog-ticks');
+  var elPrev = document.getElementById('prog-prev');
+  var elNext = document.getElementById('prog-next');
+
+  for (var i = 0; i < sections.length; i++){
+    var t = document.createElement('span');
+    t.style.left = ((i/(sections.length-1))*100) + '%';
+    elTicks.appendChild(t);
+  }
+
+  var current = 0;
+
+  function updateProgress(){
+    var scroll = window.scrollY + window.innerHeight * 0.4;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var ratio = Math.min(1, Math.max(0, window.scrollY / max));
+    elFill.style.width = (ratio*100) + '%';
+    elDot.style.left = (ratio*100) + '%';
+
+    var idx = 0;
+    for (var i = 0; i < sections.length; i++){
+      var el = document.getElementById(sections[i].id);
+      if (!el) continue;
+      var top = el.getBoundingClientRect().top + window.scrollY;
+      if (scroll >= top - 80) idx = i;
+    }
+    if (idx !== current){
+      current = idx;
+      elSec.textContent = sections[idx].sec;
+      elTitle.textContent = sections[idx].title;
+    }
+    elPrev.classList.toggle('is-disabled', current === 0);
+    elNext.classList.toggle('is-disabled', current === sections.length - 1);
+  }
+
+  function goTo(i){
+    i = Math.max(0, Math.min(sections.length-1, i));
+    var el = document.getElementById(sections[i].id);
+    if (!el) return;
+    var y = el.getBoundingClientRect().top + window.scrollY - 12;
+    window.scrollTo({top:y, behavior:'smooth'});
+  }
+
+  elPrev.addEventListener('click', function(){ goTo(current-1); });
+  elNext.addEventListener('click', function(){ goTo(current+1); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown'){ goTo(current+1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp'){   goTo(current-1); e.preventDefault(); }
+  });
+
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+})();
+</script>
+
+</body>
+</html>
