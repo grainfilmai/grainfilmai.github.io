@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Grain Labs × Outpost</title>
+<meta name="description" content="A remarkable operation, seen from a camera that could actually be there. Grain Labs proposal for Outpost.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#000;--paper:#fff;--dim:rgba(255,255,255,.62);--faint:rgba(255,255,255,.36);--rule:rgba(255,255,255,.16);
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;--sans:'Inter',system-ui,sans-serif;
+  --nav-h:52px;--gutter:clamp(20px,3.6vw,72px);--pad-y:clamp(24px,4.2vh,52px);--ref-h:34px;--gap:clamp(14px,1.4vw,26px);
+  --vh:100vh;
+}
+@supports (height:100dvh){:root{--vh:100dvh}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--ink);color:var(--paper);font-family:var(--mono);-webkit-font-smoothing:antialiased;text-wrap:pretty}
+h1,h2,h3{text-wrap:balance;margin:0;font-weight:700}
+p{margin:0}
+img{display:block;max-width:100%;height:auto}
+b,strong{font-weight:700}
+a{color:inherit}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;height:calc(var(--nav-h) + env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px);z-index:50;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding-left:var(--gutter);padding-right:var(--gutter);
+  background:rgba(0,0,0,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);font-size:12px;letter-spacing:.06em}
+.nav .brand{display:flex;gap:14px;align-items:center;white-space:nowrap;font-weight:600;text-transform:uppercase}
+.nav .brand .x{color:var(--dim);font-weight:400}
+.nav .where{display:flex;align-items:center;gap:12px;min-width:0;justify-content:center}
+.nav .where .num{font-weight:600;color:var(--dim)}
+.nav .where .name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase}
+.nav .ctl{display:flex;gap:6px;align-items:center}
+.nav button{appearance:none;background:none;border:1px solid var(--rule);color:var(--paper);font:inherit;height:30px;min-width:30px;padding:0 10px;cursor:pointer;letter-spacing:.06em}
+.nav button:hover{border-color:var(--paper)}
+.nav button:disabled{opacity:.3;cursor:default;border-color:var(--rule)}
+.progress{position:absolute;left:0;bottom:-1px;height:1px;background:var(--paper);width:0;transition:width .25s ease}
+
+/* index overlay */
+.index{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.97);display:none;overflow:auto;padding:calc(var(--nav-h) + 24px) var(--gutter) 40px}
+.index.open{display:block}
+.index ol{list-style:none;margin:0;padding:0;max-width:760px}
+.index li{border-top:1px solid var(--rule)}
+.index li:last-child{border-bottom:1px solid var(--rule)}
+.index a{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:13px 0;text-decoration:none;font-size:14px}
+.index a:hover .t{text-decoration:underline}
+.index a .n{color:var(--dim)}
+.index a.cur .n{color:var(--paper);font-weight:600}
+.index .close{position:fixed;top:calc(11px + env(safe-area-inset-top,0px));right:var(--gutter);background:none;border:1px solid var(--rule);color:#fff;font:inherit;font-size:12px;height:30px;padding:0 10px;cursor:pointer;letter-spacing:.06em}
+
+/* ---------- deck ---------- */
+.deck{height:var(--vh);overflow-y:auto;scroll-snap-type:y mandatory}
+.page{height:var(--vh);scroll-snap-align:start;position:relative;padding-top:var(--nav-h)}
+.stage{height:100%;display:grid;min-height:0;padding:var(--pad-y) var(--gutter) calc(var(--pad-y) + var(--ref-h));gap:var(--gap)}
+.stage>*{min-width:0;min-height:0}
+.ref{position:absolute;left:var(--gutter);right:var(--gutter);bottom:calc(var(--pad-y) - 4px);font-size:12px;color:var(--faint);letter-spacing:.02em;line-height:1.3}
+
+/* type */
+.h1{font-size:clamp(28px,3.3vw,60px);line-height:1.15;letter-spacing:-.01em}
+.h2{font-size:clamp(22px,2.3vw,40px);line-height:1.2}
+.h3{font-size:clamp(17px,1.5vw,26px);line-height:1.3}
+.p{font-size:clamp(15px,1.2vw,22px);line-height:1.5}
+.p+.p{margin-top:1.1em}
+.lg{font-size:clamp(16px,1.4vw,26px);line-height:1.45}
+.lg+.lg{margin-top:1em}
+.bold{font-weight:700}
+.label{font-size:clamp(13px,1.05vw,19px);color:var(--dim)}
+.rule{border:0;border-top:1px solid var(--rule);margin:0}
+.mt{margin-top:clamp(18px,2.4vh,30px)}
+.mt-s{margin-top:clamp(10px,1.4vh,18px)}
+
+/* media cells */
+.fill{position:relative;min-height:0;min-width:0;overflow:hidden}
+.fill img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fitbox{min-width:0;min-height:0;height:100%;container-type:inline-size;display:grid;place-items:center}
+.fit{position:relative;height:min(100%,calc(100cqw * var(--inv,.5625)));aspect-ratio:var(--ar,16/9)}
+.fit img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.col{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;gap:var(--gap);min-height:0}
+.col.top{grid-template-rows:auto minmax(0,1fr)}
+.txt{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.txt.start{justify-content:flex-start}
+
+/* layouts */
+.l-split{grid-template-columns:minmax(0,42fr) minmax(0,58fr);column-gap:clamp(28px,4vw,72px)}
+.l-split.even{grid-template-columns:1fr 1fr}
+.l-rows{grid-template-rows:auto minmax(0,1fr) auto}
+.l-rows.r2{grid-template-rows:minmax(0,1fr) auto}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);min-height:0}
+.row3>.card{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:14px;min-height:0}
+.row3>.card.top{grid-template-rows:auto minmax(0,1fr)}
+.row3 .card .p{margin-top:6px}
+.pair{display:grid;grid-template-columns:1.55fr 1fr;gap:var(--gap);min-height:0}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:grid;grid-template-columns:2.2em 1fr;gap:8px;padding:.35em 0;font-size:clamp(15px,1.45vw,27px);line-height:1.4}
+.list li .n{color:var(--dim)}
+.steps .s+.s{margin-top:clamp(12px,1.8vh,22px)}
+.steps .s .p{margin-top:4px}
+.plain{list-style:none;margin:6px 0 0;padding:0}
+.plain li{padding:.18em 0;font-size:clamp(15px,1.3vw,24px);line-height:1.45}
+
+/* 01 cover */
+.cover .stage{display:flex;align-items:center;justify-content:center}
+.lockup{display:flex;align-items:center;justify-content:center;gap:clamp(18px,3vw,48px);flex-wrap:wrap;text-align:center}
+.lockup img{width:clamp(180px,26vw,440px)}
+.lockup .x{font-family:var(--sans);font-weight:800;font-size:clamp(22px,3vw,52px)}
+.lockup .wm{font-family:var(--sans);font-weight:800;font-size:clamp(34px,6.4vw,104px);letter-spacing:.02em;line-height:1}
+.cue{position:absolute;bottom:calc(22px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;font-size:11px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+
+/* 02 bleed grid */
+.l-bleed{grid-template-columns:minmax(0,46fr) minmax(0,54fr);padding-top:0;padding-right:0;padding-bottom:0;column-gap:0}
+.l-bleed .txt{padding:var(--pad-y) clamp(28px,4vw,72px) calc(var(--pad-y) + var(--ref-h)) 0}
+.grid12{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr);gap:3px;min-height:0}
+
+/* 07 callouts */
+.callout .tag{position:absolute;background:#fff;color:#000;font-weight:700;font-size:clamp(11px,.9vw,16px);padding:.2em .5em;transform:translate(-50%,-50%);z-index:2}
+.callout .tag::before{content:"";position:absolute;width:var(--l,60px);height:1px;background:#fff;top:50%;left:100%;transform-origin:left center;transform:rotate(var(--a,0deg))}
+.callout .tag.flip::before{left:auto;right:100%;transform-origin:right center}
+
+/* 13 stack */
+.stack{display:grid;grid-template-rows:minmax(0,1.5fr) minmax(0,1fr);gap:var(--gap);min-height:0}
+.stack .two{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);min-height:0}
+
+/* footer */
+.foot{padding:40px var(--gutter);font-size:11px;color:var(--faint);border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;scroll-snap-align:start}
+
+/* ---------- mobile: everything flows, media keeps its aspect ---------- */
+@media (max-width:760px){
+  :root{--nav-h:44px;--pad-y:22px;--gap:14px;--ref-h:0px}
+  .nav{grid-template-columns:1fr auto;gap:10px;font-size:11px}
+  .nav .where{display:none}
+  .dsk{display:none}
+  .deck{scroll-snap-type:y proximity}
+  .page{height:auto;min-height:var(--vh);padding-bottom:var(--pad-y)}
+  .stage{height:auto;display:flex;flex-direction:column;gap:18px;padding-bottom:0}
+  .ref{position:static;margin:8px var(--gutter) 0}
+  .stage .l-split{display:flex!important;flex-direction:column;gap:14px}
+  .fill{aspect-ratio:16/9}
+  .fitbox{height:auto;display:block}
+  .fit{height:auto;width:100%;aspect-ratio:var(--ar,16/9)}
+  .col,.row3>.card,.stack,.stack .two,.pair,.grid12,.row3{display:flex;flex-direction:column;gap:14px}
+  .grid12{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto;gap:3px}
+  .row3.row3m{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+  .stack .two{flex-direction:row}
+  .stack .two .fill{flex:1}
+  .l-bleed .txt{padding:0}
+  .h1{font-size:26px}
+  .list li{font-size:15px}
+  .lockup{flex-direction:column;gap:14px}
+  .lockup img{width:min(62vw,260px)}
+  .lockup .wm{font-size:40px}
+  .cover .stage{min-height:calc(var(--vh) - var(--nav-h))}
+  .callout .tag{font-size:10px}
+  .index a{grid-template-columns:36px 1fr;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Deck navigation">
+  <div class="brand"><span>Grain Labs</span><span class="x">×</span><span>Outpost</span></div>
+  <div class="where"><span class="num" id="navNum"></span><span class="name" id="navName"></span></div>
+  <div class="ctl">
+    <button id="prevBtn" aria-label="Previous">←</button>
+    <button id="nextBtn" aria-label="Next">→</button>
+    <button id="indexBtn" aria-label="Index">Index</button>
+  </div>
+  <div class="progress" id="progress"></div>
+</nav>
+
+<div class="index" id="index" aria-hidden="true">
+  <button class="close" id="indexClose">Close</button>
+  <ol id="indexList"></ol>
+</div>
+
+<main class="deck" id="deck">
+
+<!-- 01 -->
+<section class="page cover" id="cover" data-navlabel="Outpost × Grain Labs">
+  <div class="stage">
+    <div class="lockup">
+      <img src="img/outpost-logo.jpg" alt="Outpost">
+      <span class="x">x</span>
+      <span class="wm">GRAIN LABS</span>
+    </div>
+  </div>
+  <div class="cue">Scroll ↓<span class="dsk"> &nbsp;·&nbsp; arrow keys</span></div>
+</section>
+
+<!-- 02 -->
+<section class="page" id="memorable" data-navlabel="Memorable and realistic">
+  <div class="stage l-split l-bleed">
+    <div class="txt">
+      <h1 class="h1">How do we create something memorable and realistic?</h1>
+      <div class="mt">
+        <p class="p">We had a thought about what might make this assignment unforgettable.</p>
+        <p class="p">One of the difficulties with AI generated content is that it feels OVERLY polished and OVERLY cinematic.</p>
+        <p class="p">When most productions set out this is what they try to achieve, but it doesn’t carry the weight of REALITY or the verisimilitude that comes with.</p>
+        <p class="p">In reality, demonstration videos of aerospace technology are typically cramped, a bit messy and done with non-cinematic instrumentation.</p>
+      </div>
+    </div>
+    <div class="grid12">
+      <div class="fill"><img src="img/grid-01.jpg" alt=""></div><div class="fill"><img src="img/grid-02.jpg" alt=""></div><div class="fill"><img src="img/grid-03.jpg" alt=""></div>
+      <div class="fill"><img src="img/grid-04.jpg" alt=""></div><div class="fill"><img src="img/grid-05.jpg" alt=""></div><div class="fill"><img src="img/grid-06.jpg" alt=""></div>
+      <div class="fill"><img src="img/grid-07.jpg" alt=""></div><div class="fill"><img src="img/grid-08.jpg" alt=""></div><div class="fill"><img src="img/grid-09.jpg" alt=""></div>
+      <div class="fill"><img src="img/grid-10.jpg" alt=""></div><div class="fill"><img src="img/grid-11.jpg" alt=""></div><div class="fill"><img src="img/grid-12.jpg" alt=""></div>
+    </div>
+  </div>
+  <p class="ref">reference: SpaceX / Starship ocean landing, drone view</p>
+</section>
+
+<!-- 03 -->
+<section class="page" id="event" data-navlabel="The camera is part of the event">
+  <div class="stage l-rows r2">
+    <div class="row3 row3m">
+      <div class="fill"><img src="img/event-1.jpg" alt="Starship ignition seen from a chase drone"></div>
+      <div class="fill"><img src="img/event-2.jpg" alt="Drone propellers entering the frame"></div>
+      <div class="fill"><img src="img/event-3.jpg" alt="Splashdown, the camera losing the vehicle"></div>
+    </div>
+    <div>
+      <h1 class="h1">The camera is part of the event.</h1>
+      <p class="lg mt">Using the recently viral SpaceX splashdown as a jumping-off point, we thought: <b>what if we created video that felt indistinguishable from current aerospace use case videos?</b> The drone is trying to keep up. Its propellers get into the frame. For a moment, the camera loses the thing it came to film. Those messy details put us in the scene and make it feel <b>REAL</b>.</p>
+      <p class="lg">We’d like to bring that feeling to Outpost: a remarkable operation, seen from a camera that could actually be there.</p>
+    </div>
+  </div>
+  <p class="ref">reference: SpaceX / two moments from the same recording</p>
+</section>
+
+<!-- 04 -->
+<section class="page" id="place" data-navlabel="A place on the vehicle">
+  <div class="stage l-rows">
+    <h1 class="h1">Give us a place on the vehicle.</h1>
+    <div class="pair">
+      <div class="fill"><img src="img/rocketlab.jpg" alt="Rocket Lab Electron stage separation, onboard camera"></div>
+      <div class="fill"><img src="img/ingenuity.jpg" alt="NASA JPL Ingenuity navigation camera, its own shadow on the ground"></div>
+    </div>
+    <p class="lg">A fixed mount gives us a point of reference: the vehicle’s structure, or its shadow moving over the ground.</p>
+  </div>
+  <p class="ref">references: Rocket Lab Electron stage separation / NASA JPL Ingenuity navigation camera</p>
+</section>
+
+<!-- 05 -->
+<section class="page" id="job" data-navlabel="Every camera has a job">
+  <div class="stage l-rows">
+    <div class="l-split even" style="display:grid;align-items:start">
+      <h1 class="h1">Every camera has a job.</h1>
+      <p class="lg">This rover coverage plan combines a broad view with closer detail to help choose a driving route. The sequence is shaped by what the rover needs to know.</p>
+    </div>
+    <div class="fitbox"><div class="fit" style="--ar:717/229;--inv:.3194"><img src="img/rover-plan.jpg" alt="Notional Navcam coverage plan drawn over an MSL panorama, eight numbered frames"></div></div>
+    <p class="h3 bold">For Outpost: what needs to be seen, from where, and in what order?</p>
+  </div>
+  <p class="ref">reference: Maki et al. (2020), Fig. 42 / notional Navcam coverage plan on an MSL panorama / CC BY 4.0</p>
+</section>
+
+<!-- 06 -->
+<section class="page" id="how" data-navlabel="How we’d make it">
+  <div class="stage l-split even">
+    <div class="col">
+      <div class="fill"><img src="img/recovery-boats.jpg" alt="NASA recovery rehearsal, crews in boats alongside the well deck"></div>
+      <p class="p">Plan the operation, the crews following it and the cameras that could actually record it.</p>
+    </div>
+    <div class="txt">
+      <h1 class="h1">How we’d make it</h1>
+      <ol class="list mt">
+        <li><span class="n">01</span><span>Design a real demonstration.</span></li>
+        <li><span class="n">02</span><span>Build a storyboard from your 3D assets.</span></li>
+        <li><span class="n">03</span><span>Train and test the camera look.</span></li>
+        <li><span class="n">04</span><span>Generate clips from approved frames.</span></li>
+        <li><span class="n">05</span><span>Edit it into a clear use-case film.</span></li>
+      </ol>
+      <p class="h2 mt">The storyboard follows that plan.</p>
+    </div>
+  </div>
+  <p class="ref">proposed production approach / reference: NASA recovery rehearsal, Underway Recovery Test 12</p>
+</section>
+
+<!-- 07 -->
+<section class="page" id="demonstration" data-navlabel="Design it as a real demonstration">
+  <div class="stage l-rows">
+    <h1 class="h1">Design it as a real demonstration.</h1>
+    <div class="l-split" style="display:grid;min-height:0">
+      <div class="txt start">
+        <p class="lg">Plan the demonstration and the people filming it as one physical event.</p>
+        <div class="steps mt">
+          <div class="s"><h3 class="h3">01 / Plan the operation</h3><p class="p">What happens, where it happens and what we need to see.</p></div>
+          <div class="s"><h3 class="h3">02 / Place the crew</h3><p class="p">How do they follow it, and how close can they get?</p></div>
+          <div class="s"><h3 class="h3">03 / Find the camera position</h3><p class="p">Where can it mount? What blocks its view?</p></div>
+        </div>
+      </div>
+      <div class="fitbox"><div class="fit callout" style="--ar:16/9;--inv:.5625">
+        <img src="img/x59-chase.jpg" alt="NASA X-59 seen from a chase aircraft, camera rig in the foreground">
+        <span class="tag" style="left:74%;top:19%;--l:9%;--a:150deg">01</span>
+        <span class="tag flip" style="left:32%;top:85%;--l:8%;--a:-120deg">02</span>
+        <span class="tag" style="left:85%;top:57%;--l:6%;--a:60deg">03</span>
+      </div></div>
+    </div>
+    <p class="lg">Agree the observation plan with Outpost. Then build the storyboard.</p>
+  </div>
+  <p class="ref">reference: NASA X-59 / chase-aircraft view, illustrative camera-planning reference</p>
+</section>
+
+<!-- 08 -->
+<section class="page" id="positions" data-navlabel="Give every camera a real position">
+  <div class="stage l-rows">
+    <h1 class="h1">Give every camera a real position.</h1>
+    <div class="row3">
+      <div class="card"><div class="fill"><img src="img/spectator.jpg" alt="Spectators watching a booster catch from a distance"></div><div><h3 class="h3">From a distance</h3><p class="p">Choose a position with a clear sightline and a believable working distance.</p></div></div>
+      <div class="card"><div class="fill"><img src="img/engine-bay.jpg" alt="Starship engine bay from an onboard camera"></div><div><h3 class="h3">On the vehicle</h3><p class="p">Choose a plausible mount. Let the vehicle’s own structure shape the view.</p></div></div>
+      <div class="card"><div class="fill"><img src="img/recovery-capsule.jpg" alt="Recovery crew reaching a capsule at sea"></div><div><h3 class="h3">At the receiving end</h3><p class="p">Place the camera where a receiving or recovery crew could actually stand.</p></div></div>
+    </div>
+    <p class="lg">These physical positions become the viewpoints for the storyboard stills we make with your 3D assets.</p>
+  </div>
+  <p class="ref">references: SpaceX spectator catch / Starship SN5 engine bay / NASA recovery rehearsal</p>
+</section>
+
+<!-- 09 -->
+<section class="page" id="storyboard" data-navlabel="Build the storyboard">
+  <div class="stage l-rows">
+    <div>
+      <h1 class="h1">Build the storyboard.</h1>
+      <p class="lg mt-s">We use your 3D assets to set the vehicle’s angle, scale and position. From those renders, we develop stills with the setting and camera feel we want. Your team reviews the sequence before we generate clips.</p>
+    </div>
+    <div class="row3">
+      <div class="card top"><p class="label">01 / Release</p><div class="fill"><img src="img/isro-release.jpg" alt="ISRO RLV LEX release from the helicopter at 4.5 km"></div></div>
+      <div class="card top"><p class="label">02 / Landing</p><div class="fill"><img src="img/isro-landing.jpg" alt="ISRO RLV LEX touching down"></div></div>
+      <div class="card top"><p class="label">03 / Rollout</p><div class="fill"><img src="img/isro-rollout.jpg" alt="ISRO RLV LEX rolling out on the runway"></div></div>
+    </div>
+    <p class="lg">One operation, three useful views. These ISRO frames show the kind of sequence we would plan; the Outpost storyboard comes next.</p>
+  </div>
+  <p class="ref">reference sequence: ISRO RLV LEX autonomous landing experiment / helicopter release → landing → rollout</p>
+</section>
+
+<!-- 10 -->
+<section class="page" id="train" data-navlabel="Train on the footage">
+  <div class="stage l-rows">
+    <div>
+      <h1 class="h1">Train on the footage we want it to feel like.</h1>
+      <p class="lg mt-s">A LoRA is a small trained addition to a model. We’d train on selected aerospace frames to learn exposure, lens character, texture and framing.</p>
+    </div>
+    <div class="row3">
+      <div class="card top"><p class="label">Aerial observation</p><div class="fill"><img src="img/aerial-ship.jpg" alt="Recovery ship seen from the air"></div></div>
+      <div class="card top"><p class="label">Onboard cameras</p><div class="fill"><img src="img/onboard-reentry.jpg" alt="Starship reentry plasma from an onboard camera"></div></div>
+      <div class="card top"><p class="label">Ground / infrared tracking</p><div class="fill"><img src="img/infrared.jpg" alt="Midwave infrared tracking of a capsule under parachutes"></div></div>
+    </div>
+    <div>
+      <p class="lg">Apply the learned look to the Outpost storyboard images, then generate clips from those frames.</p>
+      <p class="p mt-s">Test camera types together or separately. Review movement in the generated clips.</p>
+    </div>
+  </div>
+  <p class="ref">camera-look references: NASA Crew-4 recovery / SpaceX reentry / NASA Starliner infrared tracking, not training results</p>
+</section>
+
+<!-- 11 -->
+<section class="page" id="life" data-navlabel="Bring the storyboard to life">
+  <div class="stage l-split">
+    <div class="txt">
+      <h1 class="h1">Bring the storyboard to life.</h1>
+      <div class="mt">
+        <p class="p">ComfyUI connects the approved storyboard frame, compatible LoRAs and video generation steps.</p>
+        <p class="p">We’d first test the look in stills, then generate short clips from those frames. Video models can use their own compatible adapters where useful.</p>
+        <p class="p">We keep the inputs and settings with each shot so we can revise it after your feedback.</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="fitbox"><div class="fit" style="--ar:1600/724;--inv:.4525"><img src="img/comfyui.jpg" alt="A ComfyUI graph: load image, prompt, sampling, video output"></div></div>
+      <p class="p">An existing ComfyUI graph shows how the steps connect. Our graphs would use storyboard images and the tested camera treatments.</p>
+    </div>
+  </div>
+  <p class="ref">published workflow example: ComfyUI / Wan VACE</p>
+</section>
+
+<!-- 12 -->
+<section class="page" id="check" data-navlabel="Check every clip">
+  <div class="stage l-split">
+    <div class="txt">
+      <h1 class="h1">Check every clip.</h1>
+      <div class="mt">
+        <p class="p">A good first frame is only the beginning. The vehicle still has to hold together as it moves.</p>
+        <p class="p">We compare the full clip with the approved storyboard and model views, looking for changing shapes, drifting markings and unclear action.</p>
+        <p class="p">We regenerate or correct problem areas, and shorten a shot when that makes the operation clearer.</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="fill"><img src="img/perseverance.jpg" alt="Perseverance rover from above, hanging from the descent stage"></div>
+      <p class="p">The sort of detail we need to protect: a fixed shape, a clear connection, an action we can follow.</p>
+    </div>
+  </div>
+  <p class="ref">reference: NASA JPL Perseverance / real footage illustrating hardware and connection, not a composite</p>
+</section>
+
+<!-- 13 -->
+<section class="page" id="miss" data-navlabel="Let the camera miss a little">
+  <div class="stage l-split">
+    <div class="txt">
+      <h1 class="h1">Let the camera miss a little.</h1>
+      <div class="mt">
+        <p class="p">Water reaches the lens. Exhaust hides the landing. A window catches the sun.</p>
+        <p class="p">These details work because something in the scene causes them. We build them around the action, then check that you can still follow what happened.</p>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="fill"><img src="img/capsule-water.jpg" alt="Capsule at sea, water on the lens"></div>
+      <div class="two">
+        <div class="fill"><img src="img/sn15-dust.jpg" alt="Starship SN15 landing hidden in exhaust and dust"></div>
+        <div class="fill"><img src="img/window-sun.jpg" alt="Orion window camera catching the sun"></div>
+      </div>
+    </div>
+  </div>
+  <p class="ref">references: NASA recovery rehearsal / SpaceX SN15 landing / NASA Orion window camera</p>
+</section>
+
+<!-- 14 -->
+<section class="page" id="first" data-navlabel="Make one scene first">
+  <div class="stage l-rows">
+    <h1 class="h1">Make one scene first.</h1>
+    <div class="l-split even" style="display:grid;min-height:0">
+      <div class="txt start">
+        <p class="lg">A short test built around one of the harder actions in the brief. About 10–15 seconds is enough to see where the method holds up.</p>
+        <h3 class="h3 mt">We’d bring back:</h3>
+        <ul class="plain">
+          <li>A storyboard made with your 3D assets.</li>
+          <li>Camera-look tests, with and without LoRAs.</li>
+          <li>One assembled clip, with sound.</li>
+        </ul>
+        <h3 class="h3 mt">We’d review it together:</h3>
+        <ul class="plain">
+          <li>Does the vehicle stay right?</li>
+          <li>Can we follow the operation?</li>
+          <li>Does it feel like a camera was there?</li>
+        </ul>
+      </div>
+      <div class="fill"><img src="img/starhopper.jpg" alt="SpaceX Starhopper 150 m test, one clearly observable action"></div>
+    </div>
+    <div>
+      <hr class="rule">
+      <p class="lg mt-s">Then we can agree the approach, scope and schedule from something we’ve actually seen.</p>
+    </div>
+  </div>
+  <p class="ref">proposed first phase / reference: SpaceX Starhopper 150 m test, one clearly observable action</p>
+</section>
+
+<!-- 15 -->
+<section class="page" id="films" data-navlabel="Then build the films around it">
+  <div class="stage l-split">
+    <div class="txt">
+      <h1 class="h1">Then build the films around it.</h1>
+      <div class="mt">
+        <p class="lg">Each use case gets its own story.</p>
+        <p class="lg">We carry the approved vehicle, camera choices and tested workflows into the rest of the series.</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="fill"><img src="img/starliner-recovery.jpg" alt="NASA Starliner recovery at dusk, crews around the capsule"></div>
+      <p class="h3 bold">We want people to understand what Outpost can do, and picture being there when it happens.</p>
+    </div>
+  </div>
+  <p class="ref">GRAIN LABS × OUTPOST / reference: NASA Starliner recovery after its orbital flight test</p>
+</section>
+
+<footer class="foot">
+  <span>Grain Labs × Outpost · proposal v1</span>
+  <span><a href="https://grain-labs.com">grain-labs.com</a></span>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  const deck=document.getElementById('deck');
+  const pages=Array.from(deck.querySelectorAll('.page'));
+  const navNum=document.getElementById('navNum'),navName=document.getElementById('navName'),progress=document.getElementById('progress');
+  const prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn');
+  const index=document.getElementById('index'),indexBtn=document.getElementById('indexBtn'),indexClose=document.getElementById('indexClose'),indexList=document.getElementById('indexList');
+  const pad=n=>String(n).padStart(2,'0');
+  pages.forEach((p,i)=>{const li=document.createElement('li');const a=document.createElement('a');a.href='#'+p.id;
+    a.innerHTML='<span class="n">'+pad(i+1)+'</span><span class="t">'+(p.dataset.navlabel||p.id)+'</span>';
+    a.addEventListener('click',e=>{e.preventDefault();closeIndex();jump(p);});li.appendChild(a);indexList.appendChild(li);});
+  const links=Array.from(indexList.querySelectorAll('a'));
+  function topOf(el){return el.getBoundingClientRect().top-deck.getBoundingClientRect().top+deck.scrollTop;}
+  function cur(){const mid=deck.scrollTop+deck.clientHeight*0.42;let i=0;for(let k=0;k<pages.length;k++){if(topOf(pages[k])<=mid+2)i=k;else break;}return i;}
+  function update(){const i=cur();const p=pages[i];
+    navNum.textContent=pad(i+1)+' / '+pad(pages.length);navName.textContent=p.dataset.navlabel||'';
+    progress.style.width=((i+1)/pages.length*100)+'%';
+    prevBtn.disabled=i===0;nextBtn.disabled=i===pages.length-1;
+    links.forEach((a,k)=>a.classList.toggle('cur',k===i));
+    if(location.hash.slice(1)!==p.id)history.replaceState(null,'','#'+p.id);}
+  let anim=null;
+  function jump(p){const from=deck.scrollTop,to=Math.round(topOf(p)),dist=to-from;if(!dist)return;
+    if(anim)cancelAnimationFrame(anim);const dur=Math.min(650,300+Math.abs(dist)*0.25),t0=performance.now();
+    deck.style.scrollSnapType='none';
+    const step=now=>{const k=Math.min(1,(now-t0)/dur);const e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;deck.scrollTop=from+dist*e;
+      if(k<1)anim=requestAnimationFrame(step);else{anim=null;deck.scrollTop=to;deck.style.scrollSnapType='';update();}};
+    anim=requestAnimationFrame(step);}
+  let target=null;function go(d){const base=(target!=null)?target:cur();const t=Math.max(0,Math.min(pages.length-1,base+d));target=t;jump(pages[t]);clearTimeout(go._t);go._t=setTimeout(()=>{target=null;},700);}
+  function openIndex(){index.classList.add('open');index.setAttribute('aria-hidden','false');}
+  function closeIndex(){index.classList.remove('open');index.setAttribute('aria-hidden','true');}
+  prevBtn.addEventListener('click',()=>go(-1));nextBtn.addEventListener('click',()=>go(1));
+  indexBtn.addEventListener('click',()=>index.classList.contains('open')?closeIndex():openIndex());indexClose.addEventListener('click',closeIndex);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){closeIndex();return;}
+    if(index.classList.contains('open'))return;
+    if(['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(1);}
+    if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(-1);}
+    if(e.key==='Home'){e.preventDefault();jump(pages[0]);}
+    if(e.key==='End'){e.preventDefault();jump(pages[pages.length-1]);}});
+  let raf;deck.addEventListener('scroll',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(update);},{passive:true});
+  window.addEventListener('resize',update);
+  const h=location.hash.slice(1);const init=pages.find(p=>p.id===h);
+  const land=()=>{if(init){deck.scrollTop=topOf(init);update();}};if(init){requestAnimationFrame(land);window.addEventListener('load',()=>setTimeout(land,50));}
+  update();
+})();
+</script>
+</body>
+</html>
