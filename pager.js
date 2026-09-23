@@ -8,7 +8,7 @@
   const style=document.createElement('style');
   const deck=document.documentElement.dataset.snap==='mandatory';
   style.textContent=`html{scroll-snap-type:y proximity}.pg{scroll-snap-align:start}
-  .pager{position:fixed;right:clamp(16px,3vw,44px);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:70;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.16em;color:var(--pager-fg,#fff);mix-blend-mode:var(--pager-blend,difference)}
+  .pager{position:fixed;right:calc(clamp(16px,3vw,44px) + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:70;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.16em;color:var(--pager-fg,#fff);mix-blend-mode:var(--pager-blend,difference)}
   .pager .n{margin-right:6px;opacity:.8}
   .pager button{appearance:none;background:none;border:1px solid currentColor;color:inherit;width:34px;height:30px;cursor:pointer;font:inherit;border-radius:0;opacity:.85}
   .pager button:hover{opacity:1}.pager button:disabled{opacity:.25;cursor:default}

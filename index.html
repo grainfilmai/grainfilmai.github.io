@@ -31,9 +31,9 @@ p{margin:0}
 a{color:inherit;text-decoration:none}
 img,video{display:block;max-width:100%}
 ul,ol{margin:0;padding:0;list-style:none}
-.nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;height:56px;padding:0 var(--gutter)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;height:calc(56px + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) calc(var(--gutter) + env(safe-area-inset-right,0px)) 0 calc(var(--gutter) + env(safe-area-inset-left,0px))}
 .nav ul{display:flex;gap:clamp(14px,2vw,28px)}
-.pg{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:calc(56px + var(--pad)) var(--gutter) calc(var(--pad) + 44px);position:relative}
+.pg{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:calc(56px + env(safe-area-inset-top,0px) + var(--pad)) calc(var(--gutter) + env(safe-area-inset-right,0px)) calc(var(--pad) + 44px + env(safe-area-inset-bottom,0px)) calc(var(--gutter) + env(safe-area-inset-left,0px));position:relative}
 .in{width:100%;max-width:var(--max,1500px);margin:0 auto}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,96px);align-items:start}
 .partners .partner p,.eco .lg figcaption{font-size:clamp(14px,1.05vw,17px)}
@@ -58,8 +58,13 @@ ul,ol{margin:0;padding:0;list-style:none}
 @media (max-width:760px){
   .nav ul{display:none}
   .two,.phases,.bios,.partners,.eco{grid-template-columns:1fr}
-  .pg{min-height:auto;padding-bottom:76px}
-  .cover{min-height:100vh}
+  .pg{min-height:100vh;min-height:100svh;padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  .cover{min-height:100vh;min-height:100svh}
+  .cue{left:calc(var(--gutter) + env(safe-area-inset-left,0px));right:auto;text-align:left}
+  /* the pager is a pointer/keyboard affordance; on touch it only sits on top of
+     the text of any page taller than the screen. Scrolling replaces it. */
+  body .pager{display:none}
+  .pg{padding-bottom:calc(var(--pad) + 44px + env(safe-area-inset-bottom,0px))}
   .logos{grid-template-columns:repeat(3,1fr)}
 }
 
@@ -101,7 +106,7 @@ body:not(.past) .nav{mix-blend-mode:difference;color:#fff}
 .partner{border-top:1px solid var(--rule);padding-top:18px}
 .plogo{height:clamp(46px,4.2vw,68px);margin-bottom:20px}
 .plogo img{max-height:100%;max-width:260px}
-.plogo img,.lg img{filter:grayscale(1) invert(1) contrast(1.2)}
+.plogo img[src$=".svg"],.lg img[src$=".svg"]{filter:grayscale(1) invert(1) contrast(1.2)}
 .eco{margin-top:clamp(20px,3vh,32px)}
 .eco h3{font-weight:400;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;padding-top:14px;border-top:1px solid var(--rule)}
 .logos{gap:14px 18px}
@@ -116,7 +121,7 @@ body:not(.past) .nav{mix-blend-mode:difference;color:#fff}
 .foot .copy{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
 
 body .pager{font-family:var(--mono)}
-@media (max-width:760px){.wf{grid-template-columns:1fr}.foot .mail{font-size:clamp(20px,7vw,34px)}}
+@media (max-width:760px){.wf{grid-template-columns:1fr}.foot .mail{font-size:clamp(20px,7vw,34px)}.cue{left:calc(var(--gutter) + env(safe-area-inset-left,0px));right:auto;text-align:left}#gate .gwrap{max-width:none}#gate h1{font-size:clamp(44px,15vw,80px)}.logos{grid-template-columns:repeat(2,1fr);gap:16px 18px}.lg{height:auto;min-height:38px}.lg img{max-height:38px;max-width:100%}.plogo{height:auto;min-height:44px}.plogo img{max-height:52px;max-width:100%}}
 
 body.locked{overflow:hidden}
 body.locked>*:not(#gate){display:none!important}
@@ -198,7 +203,7 @@ body:not(.locked)>#gate{display:none}
 <section class="pg" id="partners">
   <div class="in">
     <h2 class="sec">Partners &amp; Collaborators</h2>
-    <div class="partners"><div class="partner"><div class="plogo"><img src="/images/logos/clients/smuggler.webp" alt="Smuggler" loading="lazy"></div><p>GRAIN is the AI partner to SMUGGLER, building bespoke workflows for their directors across campaigns for the world's biggest brands. Our joint work extends into live event and immersive contexts, where we're developing real-time generative systems for stage and installation environments.</p></div><div class="partner"><div class="plogo"><img src="/images/logos/clients/openai.png" alt="OpenAI" loading="lazy"></div><p>We work with OpenAI on bringing generative tools into the hands of professional filmmakers through workflow integration salons, summits, and hands-on workshops — with a focus on teaching filmmakers to build their own tools rather than adopt someone else's.</p></div><div class="partner"><div class="plogo"><img src="/images/logos/clients/mit-media-lab.png" alt="MIT Media Lab" loading="lazy"></div><p>We collaborate with researchers in and around the Fluid Interfaces Group on generative modalities beyond image and video, including early exploration of EEG-to-video pipelines and the broader question of how consciousness, perception, and generative media intersect.</p></div></div>
+    <div class="partners"><div class="partner"><div class="plogo"><img src="/images/logos_bw/clients/smuggler.png" alt="Smuggler" loading="lazy"></div><p>GRAIN is the AI partner to SMUGGLER, building bespoke workflows for their directors across campaigns for the world's biggest brands. Our joint work extends into live event and immersive contexts, where we're developing real-time generative systems for stage and installation environments.</p></div><div class="partner"><div class="plogo"><img src="/images/logos_bw/clients/openai.png" alt="OpenAI" loading="lazy"></div><p>We work with OpenAI on bringing generative tools into the hands of professional filmmakers through workflow integration salons, summits, and hands-on workshops — with a focus on teaching filmmakers to build their own tools rather than adopt someone else's.</p></div><div class="partner"><div class="plogo"><img src="/images/logos_bw/clients/mit-media-lab.png" alt="MIT Media Lab" loading="lazy"></div><p>We collaborate with researchers in and around the Fluid Interfaces Group on generative modalities beyond image and video, including early exploration of EEG-to-video pipelines and the broader question of how consciousness, perception, and generative media intersect.</p></div></div>
   </div>
 </section>
 
@@ -206,7 +211,7 @@ body:not(.locked)>#gate{display:none}
   <div class="in">
     <h2 class="sec">Ecosystem</h2>
     <p class="txt one">We maintain relationships at the highest level with the broader AI community.</p>
-    <div class="eco"><div class="col"><h3>Models</h3><div class="logos"><figure class="lg"><img src="/images/logos/ecosystem/luma.png" alt="Luma" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/flux.png" alt="" loading="lazy"><figcaption>Flux</figcaption></figure><figure class="lg"><img src="/images/logos/ecosystem/qwen.png" alt="Qwen" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/bytedance.png" alt="ByteDance" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/gemini.png" alt="Gemini" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/runway.png" alt="Runway" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/wan.png" alt="Wan" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/ltx.png" alt="" loading="lazy"><figcaption>LTX</figcaption></figure><figure class="lg"><img src="/images/logos/ecosystem/elevenlabs.png" alt="ElevenLabs" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/pika.png" alt="Pika" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/minimax.png" alt="Minimax" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/kling.png" alt="Kling" loading="lazy"></figure></div></div><div class="col"><h3>Platforms</h3><div class="logos"><figure class="lg"><img src="/images/logos/ecosystem/fal.png" alt="fal" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/comfyui.webp" alt="" loading="lazy"><figcaption>ComfyUI</figcaption></figure><figure class="lg"><img src="/images/logos/ecosystem/replicate.png" alt="" loading="lazy"><figcaption>Replicate</figcaption></figure><figure class="lg"><figcaption>TouchDesigner</figcaption></figure><figure class="lg"><img src="/images/logos/ecosystem/unrealengine.svg" alt="" loading="lazy"><figcaption>Unreal Engine</figcaption></figure><figure class="lg"><img src="/images/logos/ecosystem/disguise.png" alt="Disguise" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/notch.png" alt="Notch" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/civitai.png" alt="" loading="lazy"><figcaption>Civitai</figcaption></figure><figure class="lg"><img src="/images/logos/ecosystem/flora.svg" alt="" loading="lazy"><figcaption>Flora</figcaption></figure></div></div><div class="col"><h3>Research Collaborators</h3><div class="logos"><figure class="lg"><img src="/images/logos/clients/openai.png" alt="OpenAI" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/stability-ai.png" alt="" loading="lazy"><figcaption>Stability AI</figcaption></figure><figure class="lg"><img src="/images/logos/ecosystem/university-of-seoul.png" alt="" loading="lazy"><figcaption>University of Seoul</figcaption></figure><figure class="lg"><img src="/images/logos/clients/mit-media-lab.png" alt="MIT Media Lab" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/adobe.png" alt="Adobe" loading="lazy"></figure><figure class="lg"><img src="/images/logos/ecosystem/nvidia.png" alt="NVIDIA" loading="lazy"></figure></div></div></div>
+    <div class="eco"><div class="col"><h3>Models</h3><div class="logos"><figure class="lg"><img src="/images/logos_bw/ecosystem/luma.png" alt="Luma" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/flux.png" alt="" loading="lazy"><figcaption>Flux</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/qwen.png" alt="Qwen" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/bytedance.png" alt="ByteDance" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/gemini.png" alt="Gemini" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/runway.png" alt="Runway" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/wan.png" alt="Wan" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/ltx.png" alt="" loading="lazy"><figcaption>LTX</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/elevenlabs.png" alt="ElevenLabs" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/pika.png" alt="Pika" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/minimax.png" alt="Minimax" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/kling.png" alt="Kling" loading="lazy"></figure></div></div><div class="col"><h3>Platforms</h3><div class="logos"><figure class="lg"><img src="/images/logos_bw/ecosystem/fal.png" alt="fal" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/comfyui.png" alt="" loading="lazy"><figcaption>ComfyUI</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/replicate.png" alt="" loading="lazy"><figcaption>Replicate</figcaption></figure><figure class="lg"><figcaption>TouchDesigner</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/unrealengine.svg" alt="" loading="lazy"><figcaption>Unreal Engine</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/disguise.png" alt="Disguise" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/notch.png" alt="Notch" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/civitai.png" alt="" loading="lazy"><figcaption>Civitai</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/flora.svg" alt="" loading="lazy"><figcaption>Flora</figcaption></figure></div></div><div class="col"><h3>Research Collaborators</h3><div class="logos"><figure class="lg"><img src="/images/logos_bw/clients/openai.png" alt="OpenAI" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/stability-ai.png" alt="" loading="lazy"><figcaption>Stability AI</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/university-of-seoul.png" alt="" loading="lazy"><figcaption>University of Seoul</figcaption></figure><figure class="lg"><img src="/images/logos_bw/clients/mit-media-lab.png" alt="MIT Media Lab" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/adobe.png" alt="Adobe" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/nvidia.png" alt="NVIDIA" loading="lazy"></figure></div></div></div>
   </div>
 </section>
 
@@ -235,15 +240,15 @@ body:not(.locked)>#gate{display:none}
     return l(l(l(h(X,Y,Z),h(X+1,Y,Z),u),l(h(X,Y+1,Z),h(X+1,Y+1,Z),u),v),l(l(h(X,Y,Z+1),h(X+1,Y,Z+1),u),l(h(X,Y+1,Z+1),h(X+1,Y+1,Z+1),u),v),w);}
   function buildTargets(){targets=[];const o=document.createElement('canvas');const s=1;o.width=W;o.height=H;const c=o.getContext('2d');
     c.fillStyle='#000';c.fillRect(0,0,W,H);c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';
-    const size=Math.min(W*0.19,H*0.42);c.font='800 '+size+'px Inter, system-ui, sans-serif';c.letterSpacing=(size*0.06)+'px';
+    const size=mob()?Math.min(W*0.26,H*0.30):Math.min(W*0.19,H*0.42);c.font='800 '+size+'px Inter, system-ui, sans-serif';c.letterSpacing=(size*0.06)+'px';
     c.fillText('GRAIN',W/2+size*0.03,H/2);
-    const d=c.getImageData(0,0,W,H).data;const step=mob()?4:5;
+    const d=c.getImageData(0,0,W,H).data;const step=mob()?3:5;
     for(let y=0;y<H;y+=step)for(let x=0;x<W;x+=step){if(d[(y*W+x)*4]>128)targets.push([x+(Math.random()-.5)*step,y+(Math.random()-.5)*step]);}
     for(let i=targets.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[targets[i],targets[j]]=[targets[j],targets[i]];}}
   function resize(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);
     ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
     document.fonts&&document.fonts.ready.then(()=>{buildTargets();seed();});buildTargets();seed();}
-  function seed(){N=Math.min(mob()?2200:6000,Math.floor(W*H/(mob()?170:200)));
+  function seed(){N=Math.min(mob()?3600:6000,Math.floor(W*H/(mob()?115:200)));
     if(!AMBIENT)N=Math.min(N,targets.length);pts=[];
     for(let i=0;i<N;i++){const held=AMBIENT?(i<targets.length&&i<N*0.7):(i<targets.length);
       pts.push({x:Math.random()*W,y:Math.random()*H,px:0,py:0,vx:0,vy:0,t:held?i:-1,a:.35+Math.random()*.65,s:.6+Math.random()*.9});}
