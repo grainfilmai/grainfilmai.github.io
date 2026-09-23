@@ -102,9 +102,34 @@ body:not(.past) .nav{mix-blend-mode:difference;color:#fff}
 
 body .pager{font-family:var(--mono)}
 @media (max-width:760px){.wf{grid-template-columns:1fr}.foot .mail{font-size:clamp(20px,7vw,34px)}}
+
+body.locked{overflow:hidden}
+body.locked>*:not(#gate){display:none!important}
+body:not(.locked)>#gate{display:none}
+#gate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:var(--ink);padding:var(--gutter)}
+#gate .gwrap{width:100%;max-width:560px}
+#gate .rule{height:8px;background:var(--fg);margin-bottom:clamp(18px,3vh,30px)}
+#gate h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(54px,9vw,116px);line-height:.82;margin:0 0 clamp(20px,3.4vh,34px)}
+#gate form{display:flex;gap:10px;flex-wrap:wrap}
+#gate input{flex:1 1 220px;min-width:0;background:transparent;border:1px solid var(--rule);color:var(--fg);font:inherit;font-size:15px;letter-spacing:.04em;padding:13px 14px;border-radius:0}
+#gate input::placeholder{color:var(--faint)}
+#gate input:focus{outline:none;border-color:var(--fg)}
+#gate button{background:var(--fg);color:var(--ink);border:0;font:inherit;font-size:11px;letter-spacing:.24em;text-transform:uppercase;padding:13px 24px;cursor:pointer;border-radius:0}
+#gate button:hover{opacity:.82}
+#gate p{margin:14px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);min-height:1.3em}
 </style>
 </head>
-<body>
+<body class="locked">
+<div id="gate"><div class="gwrap">
+  <div class="rule"></div>
+  <h1>GRAIN</h1>
+  <form id="gate-form" autocomplete="on">
+    <input id="gate-password" type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="current-password" autofocus>
+    <button type="submit">Enter</button>
+  </form>
+  <p id="gate-error" role="alert"></p>
+</div></div>
+
 
 <nav class="nav" data-nopage><a class="wm" href="#top">GRAIN</a><ul><li><a href="#overview">Overview</a></li><li><a href="#what-we-do">What We Do</a></li><li><a href="#team">Team</a></li><li><a href="#how-we-work">How We Work</a></li><li><a href="#ecosystem">Ecosystem</a></li></ul></nav>
 
@@ -304,5 +329,31 @@ body .pager{font-family:var(--mono)}
 })();
 </script>
 <script src="/pager.js"></script>
+<script>
+(function(){
+  var KEY='grain_authenticated',
+      HASH='f06415eb895021f7177e9f39f03f699afa61e5c9c61a91f7335be674b1d73db3';
+  function open_(){
+    document.body.classList.remove('locked');
+    try{sessionStorage.setItem(KEY,'1')}catch(e){}
+    // the cover canvas sized itself while hidden
+    setTimeout(function(){window.dispatchEvent(new Event('resize'))},60);
+  }
+  try{ if(sessionStorage.getItem(KEY)==='1') document.body.classList.remove('locked'); }catch(e){}
+  async function sha(t){
+    var b=new TextEncoder().encode(t),d=await crypto.subtle.digest('SHA-256',b);
+    return Array.from(new Uint8Array(d)).map(function(x){return x.toString(16).padStart(2,'0')}).join('');
+  }
+  var f=document.getElementById('gate-form'),
+      i=document.getElementById('gate-password'),
+      e=document.getElementById('gate-error');
+  f&&f.addEventListener('submit',async function(ev){
+    ev.preventDefault();
+    var v=i&&i.value&&i.value.trim(); if(!v)return;
+    if(await sha(v)===HASH){ open_(); }
+    else { if(e)e.textContent='Incorrect password'; if(i){i.value='';i.focus();} }
+  });
+})();
+</script>
 </body>
 </html>
