@@ -138,6 +138,19 @@ body:not(.past) .nav{mix-blend-mode:difference;color:#fff}
 .foot .copy{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
 
 body .pager{font-family:var(--mono)}
+/* --- Dock: clean cover, chrome rolls in on page 2 --- */
+html.dock canvas#field{z-index:35;pointer-events:none;transition:none}
+html.dock body.past canvas#field{opacity:inherit}
+html.dock .cue{opacity:calc(1 - var(--dock,0) * 4)}
+html.dock .nav .wm{opacity:0;transition:opacity .45s ease,letter-spacing .9s cubic-bezier(.2,.8,.2,1);letter-spacing:.6em}
+html.dock body.docked .nav .wm{opacity:1;letter-spacing:.24em}
+html.dock .nav li{opacity:0;transform:translateY(-140%);transition:opacity .35s ease,transform .6s cubic-bezier(.2,.9,.25,1.15)}
+html.dock body.docked .nav li{opacity:1;transform:none}
+html.dock body.docked .nav li:nth-child(1){transition-delay:.18s}html.dock body.docked .nav li:nth-child(2){transition-delay:.24s}html.dock body.docked .nav li:nth-child(3){transition-delay:.30s}
+html.dock body.docked .nav li:nth-child(4){transition-delay:.36s}html.dock body.docked .nav li:nth-child(5){transition-delay:.42s}html.dock body.docked .nav li:nth-child(6){transition-delay:.48s}
+html.dock .nav ul{overflow:hidden;padding:4px 0}
+html.dock body .pager{opacity:0;transform:translateY(24px);pointer-events:none;transition:opacity .4s ease .1s,transform .7s cubic-bezier(.2,.9,.25,1.15) .1s}
+html.dock body.docked .pager{opacity:1;transform:none;pointer-events:auto}
 @media (max-width:760px){.wf{grid-template-columns:1fr}.foot .mail{font-size:clamp(20px,7vw,34px)}.cue{left:calc(var(--gutter) + env(safe-area-inset-left,0px));right:auto;text-align:left}#gate .gwrap{max-width:none}#gate h1{font-size:clamp(44px,15vw,80px)}.logos{grid-template-columns:repeat(2,1fr);gap:16px 18px}.lg{height:auto;min-height:38px}.lg img{max-height:38px;max-width:100%}.plogo{height:auto;min-height:44px}.plogo img{max-height:52px;max-width:100%}}
 
 body.locked{overflow:hidden}
@@ -171,7 +184,7 @@ body:not(.locked)>#gate{display:none}
 <nav class="nav" data-nopage><a class="wm" href="#top">GRAIN</a><ul><li><a href="#overview">Overview</a></li><li><a href="#what-we-do">What We Do</a></li><li><a href="#how-we-work">How We Work</a></li><li><a href="#partners">Partners</a></li><li><a href="#team">Team</a></li><li><a href="#contact">Contact</a></li></ul></nav>
 
 
-<canvas id="field" data-trails="0" data-ambient="0" aria-hidden="true"></canvas>
+<canvas id="field" data-trails="0" data-ambient="0" data-dock="1" aria-hidden="true"></canvas>
 <header class="pg cover" id="top">
   <h1 class="sr">GRAIN</h1>
   <div class="static-wm" aria-hidden="true">GRAIN</div>
@@ -238,7 +251,14 @@ body:not(.locked)>#gate{display:none}
 
 <script>(function(){
   const cv=document.getElementById('field');if(!cv||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-  const ctx=cv.getContext('2d',{alpha:false});
+  /* data-dock="1": the canvas sits above the pages and, as the cover scrolls away,
+     the wordmark flies into the nav's GRAIN, which then takes over */
+  const DOCK=cv.dataset.dock==='1';
+  const ctx=cv.getContext('2d',{alpha:DOCK});
+  const wmEl=DOCK?document.querySelector('.nav .wm'):null;
+  if(DOCK)document.documentElement.classList.add('dock');
+  let box=null,dockP=0;
+  const clamp01=v=>v<0?0:v>1?1:v,ss=(a,b,v)=>{v=clamp01((v-a)/(b-a));return v*v*(3-2*v);};
   const TRAILS=cv.dataset.trails!=='0';
   const AMBIENT=cv.dataset.ambient!=='0';
   const DPR=Math.min(1.5,devicePixelRatio||1);
@@ -257,9 +277,11 @@ body:not(.locked)>#gate{display:none}
     c.fillText('GRAIN',W/2+size*0.03,H/2);
     const d=c.getImageData(0,0,W,H).data;const step=mob()?3:5;
     for(let y=0;y<H;y+=step)for(let x=0;x<W;x+=step){if(d[(y*W+x)*4]>128)targets.push([x+(Math.random()-.5)*step,y+(Math.random()-.5)*step]);}
-    for(let i=targets.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[targets[i],targets[j]]=[targets[j],targets[i]];}}
+    for(let i=targets.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[targets[i],targets[j]]=[targets[j],targets[i]];}
+    let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const t of targets){if(t[0]<x0)x0=t[0];if(t[0]>x1)x1=t[0];if(t[1]<y0)y0=t[1];if(t[1]>y1)y1=t[1];}
+    box={x0,y0,w:Math.max(1,x1-x0),h:Math.max(1,y1-y0)};}
   function resize(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);
-    ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+    if(DOCK)ctx.clearRect(0,0,W,H);else{ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);}
     document.fonts&&document.fonts.ready.then(()=>{buildTargets();seed();});buildTargets();seed();}
   function seed(){N=Math.min(mob()?3600:6000,Math.floor(W*H/(mob()?115:200)));
     if(!AMBIENT)N=Math.min(N,targets.length);pts=[];
@@ -269,24 +291,35 @@ body:not(.locked)>#gate{display:none}
   addEventListener('resize',()=>{clearTimeout(resize._t);resize._t=setTimeout(resize,120);});
   addEventListener('pointermove',e=>{const nx=e.clientX,ny=e.clientY;mouse.vx=nx-mouse.x;mouse.vy=ny-mouse.y;mouse.x=nx;mouse.y=ny;},{passive:true});
   addEventListener('pointerleave',()=>{mouse.x=-1e9;mouse.y=-1e9;});
-  addEventListener('scroll',()=>{const y=scrollY;if(AMBIENT)formGoal=y<H*0.35?1:0;document.body.classList.toggle('past',y>H*0.5);},{passive:true});
+  function onScroll(){const y=scrollY;if(AMBIENT)formGoal=y<H*0.35?1:0;document.body.classList.toggle('past',y>H*0.5);
+    if(DOCK){dockP=clamp01(y/((H||innerHeight)*0.92))||0;const b=document.body;
+      b.style.setProperty('--dock',dockP.toFixed(3));
+      cv.style.opacity=(1-ss(0.82,0.98,dockP)).toFixed(3);cv.style.visibility=dockP>=0.995?'hidden':'visible';
+      b.classList.toggle('docked',dockP>0.8);}}
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
   /* flow grid: noise sampled once per cell per frame, particles look it up */
   const CELL=18;let gw=0,gh=0,gx=null,gy=null;
   function flow(){gw=Math.ceil(W/CELL)+1;gh=Math.ceil(H/CELL)+1;if(!gx||gx.length!==gw*gh){gx=new Float32Array(gw*gh);gy=new Float32Array(gw*gh);}
     const sc=0.0016*CELL,tz=t*0.12;for(let j=0;j<gh;j++)for(let i=0;i<gw;i++){const n=noise(i*sc,j*sc,tz)*Math.PI*4;gx[j*gw+i]=Math.cos(n)*0.9+0.5;gy[j*gw+i]=Math.sin(n)*0.6;}}
   const BUCKETS=5;let paths=[];
   function frame(now){const dt=Math.min(.05,(now-last)/1000||.016);last=now;t+=dt;
-    if(document.hidden){requestAnimationFrame(frame);return;}
+    if(document.hidden||(DOCK&&dockP>=0.995)){requestAnimationFrame(frame);return;}
+    /* dock: each particle's home slides from the big word to the same spot inside the nav wordmark */
+    let de=0,dr=null;if(DOCK&&box&&wmEl){de=ss(0,1,dockP);if(de>0){const r=wmEl.getBoundingClientRect();if(r.width)dr={x:r.left,y:r.top+r.height*0.12,sx:r.width/box.w,sy:r.height*0.76/box.h};else de=0;}}
     form+=(formGoal-form)*(formGoal?dt*1.2:dt*2.2);
     flow();
-    ctx.fillStyle=TRAILS?'rgba(0,0,0,'+(form>.5?.3:.12)+')':'#000';ctx.fillRect(0,0,W,H);
+    if(DOCK)ctx.clearRect(0,0,W,H);else{ctx.fillStyle=TRAILS?'rgba(0,0,0,'+(form>.5?.3:.12)+')':'#000';ctx.fillRect(0,0,W,H);}
     for(let b=0;b<BUCKETS;b++)paths[b]=new Path2D();const dots=[new Path2D(),new Path2D()];
     const r2=110*110,fs=1;
     for(let i=0;i<N;i++){const p=pts[i];
       const gi=(p.x/CELL)|0,gj=(p.y/CELL)|0;const g=(gj<0?0:gj>=gh?gh-1:gj)*gw+(gi<0?0:gi>=gw?gw-1:gi);
       const held=p.t>=0&&form>0.01;const wind=held?0.08*(1-form*0.9):0.26;
       let ax=gx[g]*wind,ay=gy[g]*wind,dmp=0.95;
-      if(held){const tg=targets[p.t];const k=0.035*form;const jx=(gx[g]-0.5)*0.35*form,jy=gy[g]*0.35*form;ax+=(tg[0]+jx-p.x)*k;ay+=(tg[1]+jy-p.y)*k;dmp=0.78;}
+      if(held){let tg=targets[p.t];
+        if(de>0){const dx=dr.x+(tg[0]-box.x0)*dr.sx,dy=dr.y+(tg[1]-box.y0)*dr.sy;
+          /* letters leave in a ripple, left to right, so the word peels off rather than shrinking as a block */
+          const lag=clamp01(de*1.35-((tg[0]-box.x0)/box.w)*0.35);tg=[tg[0]+(dx-tg[0])*lag,tg[1]+(dy-tg[1])*lag];}
+        const k=0.035*form*(1+de*2.5);const jm=0.35*form*(1-de);const jx=(gx[g]-0.5)*jm,jy=gy[g]*jm;ax+=(tg[0]+jx-p.x)*k;ay+=(tg[1]+jy-p.y)*k;dmp=0.78-de*0.12;}
       const mx=p.x-mouse.x,my=p.y-mouse.y,d2=mx*mx+my*my;if(d2<r2){const f=(1-d2/r2)*1.6;const d=Math.sqrt(d2)+.001;ax+=mx/d*f+mouse.vx*.015;ay+=my/d*f+mouse.vy*.015;}
       p.vx=(p.vx+ax*fs)*dmp;p.vy=(p.vy+ay*fs)*dmp;
       p.px=p.x;p.py=p.y;p.x+=p.vx*fs*p.s;p.y+=p.vy*fs*p.s;
