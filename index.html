@@ -162,6 +162,25 @@ html.dock body.docked .nav{background:var(--ink)}
   html.dock body:not(.docked) .mbtn{opacity:0;pointer-events:none}
   .mbtn{transition:opacity .4s ease}
 }
+@media (max-width:760px){
+  /* partners must fit one phone screen: logo beside text, tighter type and rhythm */
+  #partners .sec+.partners{margin-top:12px}
+  #partners .partners{gap:0}
+  #partners .partner{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:start;padding:12px 0}
+  #partners .plogo{height:auto;min-height:0;margin:3px 0 0}
+  #partners .plogo img{max-height:20px;max-width:76px}
+  #partners .pword{font-size:14px;letter-spacing:.1em}
+  #partners .partner p{font-size:12.5px;line-height:1.5;text-wrap:wrap;max-width:none!important}
+  #partners.pg{padding-top:calc(56px + env(safe-area-inset-top,0px) + 6px);padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+  #partners .sec{margin-bottom:0}
+}
+@media (max-width:360px),(max-height:600px) and (max-width:760px){
+  #partners .sec{font-size:30px}
+  #partners .partner{grid-template-columns:62px 1fr;gap:12px;padding:9px 0}
+  #partners .plogo img{max-width:62px;max-height:17px}
+  #partners .pword{font-size:12px}
+  #partners .partner p{font-size:11.5px;line-height:1.42}
+}
 html.dock body .pager{opacity:0;transform:translateY(24px);pointer-events:none;transition:opacity .4s ease .1s,transform .7s cubic-bezier(.2,.9,.25,1.15) .1s}
 html.dock body.docked .pager{opacity:1;transform:none;pointer-events:auto}
 @media (max-width:760px){.wf{grid-template-columns:1fr}.foot .mail{font-size:clamp(20px,7vw,34px)}.cue{left:calc(var(--gutter) + env(safe-area-inset-left,0px));right:auto;text-align:left}#gate .gwrap{max-width:none}#gate h1{font-size:clamp(44px,15vw,80px)}.logos{grid-template-columns:repeat(3,1fr);gap:14px 16px}.lg{height:28px;min-height:0}.lg img{max-height:22px;max-width:80px}.plogo{height:30px;min-height:0;margin-bottom:14px}.plogo img{max-height:28px;max-width:140px}.pword{font-size:20px}}
