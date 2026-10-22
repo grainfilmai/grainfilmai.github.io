@@ -51,6 +51,9 @@ ul,ol{margin:0;padding:0;list-style:none}
 .bul li::before{content:"\2022";position:absolute;left:.2em}
 .bul li strong{font-weight:700;color:var(--fg,inherit)}
 .work strong{font-weight:700;color:var(--fg,inherit)}
+.sec+.bul{margin-top:clamp(18px,3vh,30px)}
+.sec+.partners{margin-top:clamp(40px,8vh,96px)}
+.partners .partner{padding-top:clamp(22px,3vh,32px)}
 .prin li span{font-weight:400;color:var(--dim,inherit)}
 .prin li span strong{color:var(--fg,inherit)}
 .pword{font-family:var(--disp,inherit);text-transform:uppercase;letter-spacing:.14em;font-size:clamp(20px,1.8vw,30px);line-height:1}
@@ -199,7 +202,7 @@ body:not(.locked)>#gate{display:none}
 <section class="pg" id="how-we-work">
   <div class="in">
     <h2 class="sec">How We Work</h2>
-    <ol class="prin"><li><b>01</b><span><strong>Problem first.</strong> We start from the creative challenge, not from a tool.</span></li><li><b>02</b><span><strong>Cross-platform.</strong> We work across models, research and platforms, so every pipeline fits the job.</span></li><li><b>03</b><span><strong>Any scale.</strong> From a single consultation to full production, working alongside existing craft departments.</span></li></ol>
+    <ul class="bul"><li><strong>Problem first.</strong> We start from the creative challenge, not from a tool.</li><li><strong>Cross-platform.</strong> We work across models, research and platforms, so every pipeline fits the job.</li><li><strong>Any scale.</strong> From a single consultation to full production, working alongside existing craft departments.</li></ul>
   </div>
 </section>
 
