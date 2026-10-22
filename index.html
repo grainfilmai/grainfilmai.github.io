@@ -96,7 +96,7 @@ body.past canvas#field{opacity:0}
 .cover{background:transparent}.cover .sr{position:absolute;left:-9999px}.static-wm{display:none}
 @media (prefers-reduced-motion:reduce){canvas#field{display:none}.static-wm{display:flex;position:absolute;inset:0;align-items:center;justify-content:center;font-family:var(--disp);font-size:clamp(64px,18vw,300px);letter-spacing:.06em;text-transform:uppercase}}
 .cue{position:absolute;bottom:calc(64px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
-#overview,#what-we-do,#recent-work,#how-we-work,#team,#partners,#ecosystem,.foot{background:var(--ink)}
+#overview,#what-we-do,#workflows,#recent-work,#how-we-work,#team,#partners,#ecosystem,.foot{background:var(--ink)}
 
 /* --- City interior --- */
 .nav .wm{font-family:var(--disp);letter-spacing:.24em;font-size:14px}
@@ -150,6 +150,18 @@ html.dock body.docked .nav li{opacity:1;transform:none}
 html.dock body.docked .nav li:nth-child(1){transition-delay:.18s}html.dock body.docked .nav li:nth-child(2){transition-delay:.24s}html.dock body.docked .nav li:nth-child(3){transition-delay:.30s}
 html.dock body.docked .nav li:nth-child(4){transition-delay:.36s}html.dock body.docked .nav li:nth-child(5){transition-delay:.42s}html.dock body.docked .nav li:nth-child(6){transition-delay:.48s}
 html.dock .nav ul{overflow:hidden;padding:4px 0}
+.nav{transition:background-color .4s ease}
+html.dock body.docked .nav{background:var(--ink)}
+.mbtn{display:none}
+@media (max-width:760px){
+  .mbtn{display:block;appearance:none;background:none;border:0;color:var(--fg);font:inherit;font-size:11px;letter-spacing:.24em;text-transform:uppercase;padding:10px 0 10px 16px;cursor:pointer}
+  .mmenu{position:fixed;inset:0;z-index:39;background:var(--ink);display:flex;align-items:center;padding:calc(56px + env(safe-area-inset-top,0px)) var(--gutter) var(--gutter)}
+  .mmenu[hidden]{display:none}
+  .mmenu li a{display:block;font-family:var(--disp);text-transform:uppercase;font-size:clamp(36px,11vw,56px);line-height:1.05;padding:6px 0;color:var(--fg)}
+  html.mopen{overflow:hidden}
+  html.dock body:not(.docked) .mbtn{opacity:0;pointer-events:none}
+  .mbtn{transition:opacity .4s ease}
+}
 html.dock body .pager{opacity:0;transform:translateY(24px);pointer-events:none;transition:opacity .4s ease .1s,transform .7s cubic-bezier(.2,.9,.25,1.15) .1s}
 html.dock body.docked .pager{opacity:1;transform:none;pointer-events:auto}
 @media (max-width:760px){.wf{grid-template-columns:1fr}.foot .mail{font-size:clamp(20px,7vw,34px)}.cue{left:calc(var(--gutter) + env(safe-area-inset-left,0px));right:auto;text-align:left}#gate .gwrap{max-width:none}#gate h1{font-size:clamp(44px,15vw,80px)}.logos{grid-template-columns:repeat(2,1fr);gap:16px 18px}.lg{height:auto;min-height:38px}.lg img{max-height:38px;max-width:100%}.plogo{height:auto;min-height:44px}.plogo img{max-height:52px;max-width:100%}}
@@ -182,7 +194,14 @@ body:not(.locked)>#gate{display:none}
 </div></div>
 
 
-<nav class="nav" data-nopage><a class="wm" href="#top">GRAIN</a><ul><li><a href="#overview">Overview</a></li><li><a href="#what-we-do">What We Do</a></li><li><a href="#how-we-work">How We Work</a></li><li><a href="#partners">Partners</a></li><li><a href="#team">Team</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+<nav class="nav" data-nopage><a class="wm" href="#top">GRAIN</a><ul><li><a href="#overview">Overview</a></li><li><a href="#what-we-do">What We Do</a></li><li><a href="#how-we-work">How We Work</a></li><li><a href="#partners">Partners</a></li><li><a href="#team">Team</a></li><li><a href="#contact">Contact</a></li></ul><button class="mbtn" type="button" aria-expanded="false" aria-controls="mmenu">Menu</button></nav>
+<div class="mmenu" id="mmenu" data-nopage hidden><ul><li><a href="#overview">Overview</a></li><li><a href="#what-we-do">What We Do</a></li><li><a href="#how-we-work">How We Work</a></li><li><a href="#partners">Partners</a></li><li><a href="#team">Team</a></li><li><a href="#contact">Contact</a></li></ul></div>
+<script>
+(function(){var b=document.querySelector('.mbtn'),m=document.getElementById('mmenu');if(!b||!m)return;
+  function set(o){m.hidden=!o;b.setAttribute('aria-expanded',o);b.textContent=o?'Close':'Menu';document.documentElement.classList.toggle('mopen',o);}
+  b.addEventListener('click',function(){set(m.hidden);});
+  m.addEventListener('click',function(e){if(e.target.closest('a'))set(false);});})();
+</script>
 
 
 <canvas id="field" data-trails="0" data-ambient="0" data-dock="1" aria-hidden="true"></canvas>
@@ -204,6 +223,14 @@ body:not(.locked)>#gate{display:none}
     <h2 class="sec">What We Do</h2>
     <div class="txt lead"><p>We bring multidisciplinary backgrounds in creative technology, filmmaking and photography, and years of process-oriented experience, to the open territory of emerging AI tools.</p><p>When there is an obvious solution, we implement it. More often we work on problems without one, and find the creative path that gets there.</p></div>
     <ul class="bul"><li><strong>Production.</strong> Finished films and imagery, from look development to final delivery.</li><li><strong>Implementation.</strong> Custom pipelines and workflows built around the team and the job.</li><li><strong>Consultation.</strong> A clear read on what is possible now and what is worth pursuing.</li><li><strong>Collaboration.</strong> Ongoing partnerships with artists, studios, brands and research labs.</li></ul>
+  </div>
+</section>
+
+<section class="pg" id="workflows">
+  <div class="in">
+    <h2 class="sec">Workflows</h2>
+    <div class="wf"><img src="/images/workflow-1.jpg" alt="Custom ComfyUI workflow" loading="lazy"><img src="/images/workflow-2.jpg" alt="Custom ComfyUI workflow" loading="lazy"></div>
+    <p class="cap"><em>Custom ComfyUI workflows we built for OpenAI.</em></p>
   </div>
 </section>
 
@@ -282,7 +309,8 @@ body:not(.locked)>#gate{display:none}
     for(let i=0;i<N;i++){const held=AMBIENT?(i<targets.length&&i<N*0.7):(i<targets.length);
       pts.push({x:Math.random()*W,y:Math.random()*H,px:0,py:0,vx:0,vy:0,t:held?i:-1,a:.35+Math.random()*.65,s:.6+Math.random()*.9});}
     pts.forEach(p=>{p.px=p.x;p.py=p.y;});}
-  addEventListener('resize',()=>{clearTimeout(resize._t);resize._t=setTimeout(resize,120);});
+  /* phone toolbars change only the height while scrolling; re-seeding then would scatter the word */
+  addEventListener('resize',()=>{if(innerWidth===W&&Math.abs(innerHeight-H)<200&&matchMedia('(pointer:coarse)').matches)return;clearTimeout(resize._t);resize._t=setTimeout(resize,120);});
   addEventListener('pointermove',e=>{const nx=e.clientX,ny=e.clientY;mouse.vx=nx-mouse.x;mouse.vy=ny-mouse.y;mouse.x=nx;mouse.y=ny;},{passive:true});
   addEventListener('pointerleave',()=>{mouse.x=-1e9;mouse.y=-1e9;});
   function onScroll(){const y=scrollY;if(AMBIENT)formGoal=y<H*0.35?1:0;document.body.classList.toggle('past',y>H*0.5);
