@@ -42,10 +42,15 @@ ul,ol{margin:0;padding:0;list-style:none}
 .wf img{width:100%;aspect-ratio:3/2;object-fit:cover}
 .cap{margin-top:10px}
 .prin li{display:grid;grid-template-columns:3em 1fr;gap:12px;align-items:baseline}
+.prin.svc li{grid-template-columns:1fr}
+.prin li strong{font-weight:700}
+.txt+.prin{margin-top:clamp(20px,3.4vh,36px)}
+.pword{font-family:var(--disp,inherit);text-transform:uppercase;letter-spacing:.14em;font-size:clamp(20px,1.8vw,30px);line-height:1}
+@media (max-width:1100px) and (min-width:761px){.partners{grid-template-columns:1fr 1fr}}
 .phases{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,48px)}
 .phase .k{display:block}
 .bios{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,72px)}
-.partners{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,48px)}
+.partners{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,48px)}
 .plogo{height:34px;display:flex;align-items:center;margin-bottom:16px}
 .plogo img{max-height:34px;max-width:150px;width:auto;object-fit:contain}
 .eco{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,48px)}
@@ -79,7 +84,7 @@ body.past canvas#field{opacity:0}
 .cover{background:transparent}.cover .sr{position:absolute;left:-9999px}.static-wm{display:none}
 @media (prefers-reduced-motion:reduce){canvas#field{display:none}.static-wm{display:flex;position:absolute;inset:0;align-items:center;justify-content:center;font-family:var(--disp);font-size:clamp(64px,18vw,300px);letter-spacing:.06em;text-transform:uppercase}}
 .cue{position:absolute;bottom:calc(64px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
-#overview,#what-we-do,#process,#how-we-work,#team,#partners,#ecosystem,.foot{background:var(--ink)}
+#overview,#what-we-do,#recent-work,#how-we-work,#team,#partners,#ecosystem,.foot{background:var(--ink)}
 
 /* --- City interior --- */
 .nav .wm{font-family:var(--disp);letter-spacing:.24em;font-size:14px}
@@ -151,7 +156,7 @@ body:not(.locked)>#gate{display:none}
 </div></div>
 
 
-<nav class="nav" data-nopage><a class="wm" href="#top">GRAIN</a><ul><li><a href="#overview">Overview</a></li><li><a href="#what-we-do">What We Do</a></li><li><a href="#team">Team</a></li><li><a href="#how-we-work">How We Work</a></li><li><a href="#ecosystem">Ecosystem</a></li></ul></nav>
+<nav class="nav" data-nopage><a class="wm" href="#top">GRAIN</a><ul><li><a href="#overview">Overview</a></li><li><a href="#what-we-do">What We Do</a></li><li><a href="#how-we-work">How We Work</a></li><li><a href="#partners">Partners</a></li><li><a href="#team">Team</a></li><li><a href="#contact">Contact</a></li></ul></nav>
 
 
 <canvas id="field" data-trails="0" data-ambient="0" aria-hidden="true"></canvas>
@@ -163,54 +168,51 @@ body:not(.locked)>#gate{display:none}
 
 <section class="pg" id="overview">
   <div class="in">
-    <h2 class="disp">GRAIN is a creative R&amp;D Laboratory.</h2>
-    <div class="txt lead"><p>We are an AI consultancy built for filmmakers, anchored by a partnership with SMUGGLER — one of North America's most awarded commercial production companies.</p><p>We believe the filmmakers most impacted by generative AI should be the ones shaping how it enters professional production. Our work is about fluency, not adoption. We meet filmmakers in their own creative processes and translate the technical landscape into terms that match how they already think and work.</p></div>
+    <h2 class="disp">GRAIN is a creative R&amp;D laboratory.</h2>
+    <div class="txt lead"><p>We build creative solutions to frontier technology: production, implementation, consultation and collaboration. AI systems represent an increasingly viable tool option for creative video and image generation pipelines. Knowing how to work with them requires a combination of frontier technical expertise and deep creative experience.</p></div>
   </div>
 </section>
 
 <section class="pg" id="what-we-do">
   <div class="in">
     <h2 class="sec">What We Do</h2>
-    <div class="txt lead"><p>We educate filmmakers on the frontier capabilities of AI systems. By offering a direct connection between the latest research and the filmmaking community, we build conversation and collaboration organically before addressing specific client needs.</p><p>We're also cross-platform by design. We maintain active relationships across the model, research, and platform landscape so that the tools we recommend and pipelines we custom build are specifically tailored to the job.</p></div>
+    <div class="txt lead"><p>We bring multidisciplinary backgrounds in creative technology, filmmaking and photography, and years of process-oriented experience, to the open territory of emerging AI tools. When there is an obvious solution, we implement it. More often we work on problems without one, and find the creative path that gets there.</p></div>
+    <ul class="prin svc"><li><span><strong>Production.</strong> Finished films and imagery, from look development to final delivery.</span></li><li><span><strong>Implementation.</strong> Custom pipelines and workflows built around the team and the job.</span></li><li><span><strong>Consultation.</strong> A clear read on what is possible now and what is worth pursuing.</span></li><li><span><strong>Collaboration.</strong> Ongoing partnerships with artists, studios, brands and research labs.</span></li></ul>
   </div>
 </section>
 
-<section class="pg" id="process">
+<section class="pg" id="recent-work">
   <div class="in">
-    <h2 class="sec">Process Over Product</h2>
-    <div class="txt lead"><p>Most AI studios build a single product and expect filmmakers to adapt.</p><p>GRAIN works the other way — building systems and pipelines that adapt to filmmakers.</p></div>
-    <div class="wf"><img src="/images/workflow-1.jpg" alt="" loading="lazy"><img src="/images/workflow-2.jpg" alt="" loading="lazy"></div>
-    <p class="cap"><em>2 examples of custom workflows we designed for filmmakers</em></p>
+    <h2 class="sec">Recent Work</h2>
+    <ul class="prin svc"><li><span><strong>Outpost.</strong> Photoreal mission films for an aerospace logistics company, showing operations that can't be filmed.</span></li></ul>
   </div>
 </section>
 
 <section class="pg" id="how-we-work">
   <div class="in">
     <h2 class="sec">How We Work</h2>
-    <ol class="prin"><li><b>01</b><span>Start with the creative and budgetary challenges filmmakers are actually facing.</span></li><li><b>02</b><span>Make the AI landscape legible through research and shared education.</span></li><li><b>03</b><span>Open possibilities filmmakers haven't yet had the vocabulary for.</span></li><li><b>04</b><span>Meet filmmakers where their needs already exist, rather than forcing change.</span></li><li><b>05</b><span>Create opportunities, not dismantle current processes.</span></li></ol>
-    <p class="lead2">Our engagements are built around these commitments and unfold in two phases. Most begin in the first.</p>
-    <div class="phases"><div class="phase"><span class="k">Phase 1</span><h3>Fluency &amp; Strategy</h3><p>A collaborative engagement that orients a filmmaking team inside the current generative landscape. We lead creative ideation, visual research, and workflow exploration — reframing budgets where generative approaches unlock visions traditional production can't afford — and surface creative modalities that don't yet exist in the current playbook. Phase 1 is self-contained: teams leave with a clear map of what's possible and what's worth their attention.</p></div><div class="phase"><span class="k">Phase 2</span><h3>Systems &amp; Production</h3><p>When a project is ready to move from exploration into execution, we build custom systems scoped to its exact needs — pipeline design, workflow integration, and on-set collaboration with existing craft departments. Phase 2 is structured per project, priced independently, and draws on additional production partners on an as-needed basis.</p></div></div>
-  </div>
-</section>
-
-<section class="pg" id="team">
-  <div class="in">
-    <h2 class="sec">Team</h2>
-    <div class="bios"><p class="bio"><strong>Jed DeMoss</strong> — Co-founder. Creative producer with fifteen years in feature financing, development, and production strategy across IMAX, Annapurna, Animal Kingdom, and AGC Studios. As an independent producer, his current slate includes filmmakers such as Apichatpong Weerasethakul, Lucrecia Martel, Alice Rohrwacher, RaMell Ross, Mike Mills, and Jane Schoenbrun.</p><p class="bio"><strong>John Fitzgerald</strong> — Co-founder. Creative technologist with projects premiered at Cannes, Sundance, Tribeca, IDFA, BAM, and SIGGRAPH, and led work for Google, Apple, Samsung, MoMA, and The New York Times. Co-founder of the experiential studio Sensorium, Innovation Director at Onassis ONX, former Visiting Artist at MIT's Center for Art, Science and Technology, and a Pulitzer Center grantee.</p></div>
+    <ol class="prin"><li><b>01</b><span><strong>Problem first.</strong> We start from the creative challenge, not from a tool.</span></li><li><b>02</b><span><strong>Cross-platform.</strong> We work across models, research and platforms, so every pipeline fits the job.</span></li><li><b>03</b><span><strong>Any scale.</strong> From a single consultation to full production, working alongside existing craft departments.</span></li></ol>
   </div>
 </section>
 
 <section class="pg" id="partners">
   <div class="in">
     <h2 class="sec">Partners &amp; Collaborators</h2>
-    <div class="partners"><div class="partner"><div class="plogo"><img src="/images/logos_bw/clients/smuggler.png" alt="Smuggler" loading="lazy"></div><p>GRAIN is the AI partner to SMUGGLER, building bespoke workflows for their directors across campaigns for the world's biggest brands. Our joint work extends into live event and immersive contexts, where we're developing real-time generative systems for stage and installation environments.</p></div><div class="partner"><div class="plogo"><img src="/images/logos_bw/clients/openai.png" alt="OpenAI" loading="lazy"></div><p>We work with OpenAI on bringing generative tools into the hands of professional filmmakers through workflow integration salons, summits, and hands-on workshops — with a focus on teaching filmmakers to build their own tools rather than adopt someone else's.</p></div><div class="partner"><div class="plogo"><img src="/images/logos_bw/clients/mit-media-lab.png" alt="MIT Media Lab" loading="lazy"></div><p>We collaborate with researchers in and around the Fluid Interfaces Group on generative modalities beyond image and video, including early exploration of EEG-to-video pipelines and the broader question of how consciousness, perception, and generative media intersect.</p></div></div>
+    <div class="partners"><div class="partner"><div class="plogo"><img src="/images/logos_bw/clients/smuggler.png" alt="Smuggler" loading="lazy"></div><p>GRAIN is the AI partner to SMUGGLER, building bespoke workflows for their directors on campaigns for the world's biggest brands, and real-time generative systems for live events and installations.</p></div><div class="partner"><div class="plogo"><img src="/images/logos_bw/clients/openai.png" alt="OpenAI" loading="lazy"></div><p>Workflow salons, summits and hands-on workshops that bring generative tools to professional filmmakers.</p></div><div class="partner"><div class="plogo"><img src="/images/logos_bw/clients/mit-media-lab.png" alt="MIT Media Lab" loading="lazy"></div><p>Research with the Fluid Interfaces Group on generative modalities beyond image and video, including early EEG-to-video work.</p></div><div class="partner"><div class="plogo"><span class="pword">Outpost</span></div><p>Product and use case visualizations for development-stage aerospace technologies.</p></div></div>
+  </div>
+</section>
+
+<section class="pg" id="team">
+  <div class="in">
+    <h2 class="sec">Team</h2>
+    <div class="bios"><p class="bio"><strong>Jed DeMoss, Co-founder.</strong> Creative producer with fifteen years in feature financing, development and production strategy across IMAX, Annapurna, Animal Kingdom and AGC Studios. His current slate includes Apichatpong Weerasethakul, Lucrecia Martel, Alice Rohrwacher, RaMell Ross, Mike Mills and Jane Schoenbrun.</p><p class="bio"><strong>John Fitzgerald, Co-founder.</strong> Creative technologist with work premiered at Cannes, Sundance, Tribeca, IDFA, BAM and SIGGRAPH, for clients including Google, Apple, Samsung, MoMA and The New York Times. Co-founder of Sensorium, Innovation Director at Onassis ONX, former Visiting Artist at MIT CAST, and a Pulitzer Center grantee.</p></div>
   </div>
 </section>
 
 <section class="pg" id="ecosystem">
   <div class="in">
     <h2 class="sec">Ecosystem</h2>
-    <p class="txt one">We maintain relationships at the highest level with the broader AI community.</p>
+    <p class="txt one">We maintain close relationships across the AI community.</p>
     <div class="eco"><div class="col"><h3>Models</h3><div class="logos"><figure class="lg"><img src="/images/logos_bw/ecosystem/luma.png" alt="Luma" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/flux.png" alt="" loading="lazy"><figcaption>Flux</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/qwen.png" alt="Qwen" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/bytedance.png" alt="ByteDance" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/gemini.png" alt="Gemini" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/runway.png" alt="Runway" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/wan.png" alt="Wan" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/ltx.png" alt="" loading="lazy"><figcaption>LTX</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/elevenlabs.png" alt="ElevenLabs" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/pika.png" alt="Pika" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/minimax.png" alt="Minimax" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/kling.png" alt="Kling" loading="lazy"></figure></div></div><div class="col"><h3>Platforms</h3><div class="logos"><figure class="lg"><img src="/images/logos_bw/ecosystem/fal.png" alt="fal" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/comfyui.png" alt="" loading="lazy"><figcaption>ComfyUI</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/replicate.png" alt="" loading="lazy"><figcaption>Replicate</figcaption></figure><figure class="lg"><figcaption>TouchDesigner</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/unrealengine.svg" alt="" loading="lazy"><figcaption>Unreal Engine</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/disguise.png" alt="Disguise" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/notch.png" alt="Notch" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/civitai.png" alt="" loading="lazy"><figcaption>Civitai</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/flora.svg" alt="" loading="lazy"><figcaption>Flora</figcaption></figure></div></div><div class="col"><h3>Research Collaborators</h3><div class="logos"><figure class="lg"><img src="/images/logos_bw/clients/openai.png" alt="OpenAI" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/stability-ai.png" alt="" loading="lazy"><figcaption>Stability AI</figcaption></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/university-of-seoul.png" alt="" loading="lazy"><figcaption>University of Seoul</figcaption></figure><figure class="lg"><img src="/images/logos_bw/clients/mit-media-lab.png" alt="MIT Media Lab" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/adobe.png" alt="Adobe" loading="lazy"></figure><figure class="lg"><img src="/images/logos_bw/ecosystem/nvidia.png" alt="NVIDIA" loading="lazy"></figure></div></div></div>
   </div>
 </section>
