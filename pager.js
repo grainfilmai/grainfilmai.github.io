@@ -15,7 +15,8 @@
   .pager button{appearance:none;background:none;border:1px solid currentColor;color:inherit;width:34px;height:30px;cursor:pointer;font:inherit;border-radius:0;opacity:.85}
   .pager button:hover{opacity:1}.pager button:disabled{opacity:.25;cursor:default}
   @media (max-width:760px){.pager{right:14px}}
-  @media (hover:none) and (pointer:coarse){html{scroll-snap-type:none}}`;
+  /* mandatory snap still lets you scroll inside a page taller than the screen, then snaps at its edges */
+  @media (hover:none) and (pointer:coarse){html{scroll-snap-type:y mandatory}.pg{scroll-snap-stop:normal}}`;
   document.head.appendChild(style);
   const ui=document.createElement('div');ui.className='pager';ui.setAttribute('aria-label','Pages');
   ui.innerHTML='<span class="n"><span id="pgCur">01</span> / '+String(pages.length).padStart(2,'0')+'</span><button id="pgPrev" aria-label="Previous page">←</button><button id="pgNext" aria-label="Next page">→</button>';

@@ -164,7 +164,7 @@ html.dock body.docked .nav{background:var(--ink)}
 }
 html.dock body .pager{opacity:0;transform:translateY(24px);pointer-events:none;transition:opacity .4s ease .1s,transform .7s cubic-bezier(.2,.9,.25,1.15) .1s}
 html.dock body.docked .pager{opacity:1;transform:none;pointer-events:auto}
-@media (max-width:760px){.wf{grid-template-columns:1fr}.foot .mail{font-size:clamp(20px,7vw,34px)}.cue{left:calc(var(--gutter) + env(safe-area-inset-left,0px));right:auto;text-align:left}#gate .gwrap{max-width:none}#gate h1{font-size:clamp(44px,15vw,80px)}.logos{grid-template-columns:repeat(2,1fr);gap:16px 18px}.lg{height:auto;min-height:38px}.lg img{max-height:38px;max-width:100%}.plogo{height:auto;min-height:44px}.plogo img{max-height:52px;max-width:100%}}
+@media (max-width:760px){.wf{grid-template-columns:1fr}.foot .mail{font-size:clamp(20px,7vw,34px)}.cue{left:calc(var(--gutter) + env(safe-area-inset-left,0px));right:auto;text-align:left}#gate .gwrap{max-width:none}#gate h1{font-size:clamp(44px,15vw,80px)}.logos{grid-template-columns:repeat(3,1fr);gap:14px 16px}.lg{height:28px;min-height:0}.lg img{max-height:22px;max-width:80px}.plogo{height:30px;min-height:0;margin-bottom:14px}.plogo img{max-height:28px;max-width:140px}.pword{font-size:20px}}
 
 body.locked{overflow:hidden}
 body.locked>*:not(#gate){display:none!important}
@@ -416,7 +416,7 @@ body:not(.locked)>#gate{display:none}
   var t;addEventListener('resize',function(){clearTimeout(t);t=setTimeout(go,200)});
 })();
 </script>
-<script src="/pager.js?v=bc60eaaf"></script>
+<script src="/pager.js?v=a0402962"></script>
 <script>
 (function(){
   var KEY='grain_authenticated',
