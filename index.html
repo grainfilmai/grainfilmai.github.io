@@ -51,6 +51,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .bul li::before{content:"\2022";position:absolute;left:.2em}
 .bul li strong{font-weight:700;color:var(--fg,inherit)}
 .work strong{font-weight:700;color:var(--fg,inherit)}
+.txt.one{max-width:none;text-wrap:wrap}
 .sec+.bul{margin-top:clamp(18px,3vh,30px)}
 .sec+.partners{margin-top:clamp(40px,8vh,96px)}
 .partners .partner{padding-top:clamp(22px,3vh,32px)}
@@ -108,7 +109,7 @@ body:not(.past) .nav{mix-blend-mode:difference;color:#fff}
 .sec{font-size:clamp(34px,4.6vw,80px);margin-bottom:clamp(14px,2.4vh,26px)}
 .lead{margin-top:clamp(18px,3vh,32px);font-size:clamp(15px,1.2vw,20px);line-height:1.6;max-width:68ch;color:var(--dim)}
 .txt p,.bio,.partner p,.phase p,.lead2{font-size:clamp(14px,1.05vw,18px);line-height:1.62;color:var(--dim)}
-.txt.one{max-width:54ch}
+.txt.one{max-width:none}
 .cap{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}.cap em{font-style:normal}
 .wf{gap:clamp(12px,1.6vw,22px);margin-top:clamp(20px,3.4vh,40px)}
 .wf img{aspect-ratio:16/10}
@@ -132,7 +133,7 @@ body:not(.past) .nav{mix-blend-mode:difference;color:#fff}
 
 /* --- Field end page --- */
 .foot .wm{font-family:var(--disp);letter-spacing:.24em;font-size:16px}
-.foot .mail{font-size:clamp(22px,4.4vw,72px);font-weight:700;letter-spacing:-.02em;line-height:1;padding:8vh 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);width:100%}
+.foot .mail{font-size:clamp(22px,4.4vw,72px);font-weight:700;letter-spacing:-.02em;line-height:1;padding:6vh 0 8vh;border-bottom:1px solid var(--rule);width:100%}
 .foot .mail:hover{color:var(--dim)}
 .foot .copy{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
 
@@ -230,7 +231,6 @@ body:not(.locked)>#gate{display:none}
 
 <footer class="pg foot" id="contact">
   <div class="in">
-    <span class="wm">GRAIN</span>
     <a class="mail" href="mailto:hello@grain-labs.com">hello@grain-labs.com</a>
     <span class="copy">© 2026 GRAIN</span>
   </div>
