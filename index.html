@@ -183,7 +183,7 @@ html.dock body.docked .nav{background:var(--ink)}
 }
 html.dock body .pager{opacity:0;transform:translateY(24px);pointer-events:none;transition:opacity .4s ease .1s,transform .7s cubic-bezier(.2,.9,.25,1.15) .1s}
 html.dock body.docked .pager{opacity:1;transform:none;pointer-events:auto}
-@media (max-width:760px){.wf{grid-template-columns:1fr}.foot .mail{font-size:clamp(20px,7vw,34px)}.cue{left:calc(var(--gutter) + env(safe-area-inset-left,0px));right:auto;text-align:left}#gate .gwrap{max-width:none}#gate h1{font-size:clamp(44px,15vw,80px)}.logos{grid-template-columns:repeat(3,1fr);gap:14px 16px}.lg{height:28px;min-height:0}.lg img{max-height:22px;max-width:80px}.plogo{height:30px;min-height:0;margin-bottom:14px}.plogo img{max-height:28px;max-width:140px}.pword{font-size:20px}}
+@media (max-width:760px){.wf{grid-template-columns:1fr}.foot .mail{font-size:clamp(20px,7vw,34px)}.cue{left:0;right:0;text-align:center}#gate .gwrap{max-width:none}#gate h1{font-size:clamp(44px,15vw,80px)}.logos{grid-template-columns:repeat(3,1fr);gap:14px 16px}.lg{height:28px;min-height:0}.lg img{max-height:22px;max-width:80px}.plogo{height:30px;min-height:0;margin-bottom:14px}.plogo img{max-height:28px;max-width:140px}.pword{font-size:20px}}
 
 body.locked{overflow:hidden}
 body.locked>*:not(#gate){display:none!important}
@@ -245,18 +245,17 @@ body:not(.locked)>#gate{display:none}
   </div>
 </section>
 
+<section class="pg" id="how-we-work">
+  <div class="in">
+    <h2 class="sec">How We Work</h2>
+    <ul class="bul"><li><strong>Problem first.</strong> We start from the creative challenge, not from a tool.</li><li><strong>Cross-platform.</strong> We work across models, research and platforms, so every pipeline fits the job.</li><li><strong>Any scale.</strong> From a single consultation to full production, working alongside existing craft departments.</li></ul>
+  </div>
+</section>
 <section class="pg" id="workflows">
   <div class="in">
     <h2 class="sec">Workflows</h2>
     <div class="wf"><img src="/images/workflow-1.jpg" alt="Custom ComfyUI workflow" loading="lazy"><img src="/images/workflow-2.jpg" alt="Custom ComfyUI workflow" loading="lazy"></div>
     <p class="cap"><em>Custom ComfyUI workflows we built for OpenAI.</em></p>
-  </div>
-</section>
-
-<section class="pg" id="how-we-work">
-  <div class="in">
-    <h2 class="sec">How We Work</h2>
-    <ul class="bul"><li><strong>Problem first.</strong> We start from the creative challenge, not from a tool.</li><li><strong>Cross-platform.</strong> We work across models, research and platforms, so every pipeline fits the job.</li><li><strong>Any scale.</strong> From a single consultation to full production, working alongside existing craft departments.</li></ul>
   </div>
 </section>
 
