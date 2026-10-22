@@ -45,6 +45,14 @@ ul,ol{margin:0;padding:0;list-style:none}
 .prin.svc li{grid-template-columns:1fr}
 .prin li strong{font-weight:700}
 .txt+.prin{margin-top:clamp(20px,3.4vh,36px)}
+.txt+.bul{margin-top:clamp(18px,3vh,30px)}
+.bul li{position:relative;padding-left:1.4em;font-size:clamp(14px,1.05vw,18px);line-height:1.62;color:var(--dim,inherit)}
+.bul li+li{margin-top:.35em}
+.bul li::before{content:"\2022";position:absolute;left:.2em}
+.bul li strong{font-weight:700;color:var(--fg,inherit)}
+.work strong{font-weight:700;color:var(--fg,inherit)}
+.prin li span{font-weight:400;color:var(--dim,inherit)}
+.prin li span strong{color:var(--fg,inherit)}
 .pword{font-family:var(--disp,inherit);text-transform:uppercase;letter-spacing:.14em;font-size:clamp(20px,1.8vw,30px);line-height:1}
 @media (max-width:1100px) and (min-width:761px){.partners{grid-template-columns:1fr 1fr}}
 .phases{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,48px)}
@@ -176,15 +184,15 @@ body:not(.locked)>#gate{display:none}
 <section class="pg" id="what-we-do">
   <div class="in">
     <h2 class="sec">What We Do</h2>
-    <div class="txt lead"><p>We bring multidisciplinary backgrounds in creative technology, filmmaking and photography, and years of process-oriented experience, to the open territory of emerging AI tools. When there is an obvious solution, we implement it. More often we work on problems without one, and find the creative path that gets there.</p></div>
-    <ul class="prin svc"><li><span><strong>Production.</strong> Finished films and imagery, from look development to final delivery.</span></li><li><span><strong>Implementation.</strong> Custom pipelines and workflows built around the team and the job.</span></li><li><span><strong>Consultation.</strong> A clear read on what is possible now and what is worth pursuing.</span></li><li><span><strong>Collaboration.</strong> Ongoing partnerships with artists, studios, brands and research labs.</span></li></ul>
+    <div class="txt lead"><p>We bring multidisciplinary backgrounds in creative technology, filmmaking and photography, and years of process-oriented experience, to the open territory of emerging AI tools.</p><p>When there is an obvious solution, we implement it. More often we work on problems without one, and find the creative path that gets there.</p></div>
+    <ul class="bul"><li><strong>Production.</strong> Finished films and imagery, from look development to final delivery.</li><li><strong>Implementation.</strong> Custom pipelines and workflows built around the team and the job.</li><li><strong>Consultation.</strong> A clear read on what is possible now and what is worth pursuing.</li><li><strong>Collaboration.</strong> Ongoing partnerships with artists, studios, brands and research labs.</li></ul>
   </div>
 </section>
 
 <section class="pg" id="recent-work">
   <div class="in">
     <h2 class="sec">Recent Work</h2>
-    <ul class="prin svc"><li><span><strong>Outpost.</strong> Photoreal mission films for an aerospace logistics company, showing operations that can't be filmed.</span></li></ul>
+    <div class="txt lead work"><p><strong>Outpost.</strong> Photoreal mission films for an aerospace logistics company, showing operations that can't be filmed.</p></div>
   </div>
 </section>
 
