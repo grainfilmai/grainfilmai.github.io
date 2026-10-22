@@ -139,6 +139,7 @@ body:not(.past) .nav{mix-blend-mode:difference;color:#fff}
 
 body .pager{font-family:var(--mono)}
 /* --- Dock: clean cover, chrome rolls in on page 2 --- */
+html{color-scheme:dark;scrollbar-width:none}html::-webkit-scrollbar{display:none}
 html.dock canvas#field{z-index:35;pointer-events:none;transition:none}
 html.dock body.past canvas#field{opacity:inherit}
 html.dock .cue{opacity:calc(1 - var(--dock,0) * 4)}
